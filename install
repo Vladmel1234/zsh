@@ -1,0 +1,3 @@
+ln -s .zlogout ~/.zlogout
+ln -s .zshenv ~/.zshenv
+ln -s .zshrc ~/.zshrc

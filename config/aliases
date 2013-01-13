@@ -1,0 +1,49 @@
+# Easier navigation: .., ..., ~ and -
+	alias ..="cd .."
+	alias ...="cd ../.."
+	alias ~="cd ~" # `cd` is probably faster to type though
+	alias -- -="cd -"
+
+# Listings
+	alias lsa='ls -laF --color=always'
+	alias lsd='ls -l | grep "^d"' # List only directories
+	alias ll='tree --dirsfirst -ChFupDaLg 1' #list using tree
+
+# Information
+	alias fs="stat -f \"%z bytes\"" # File size
+	alias emptytrash="rm -rfv ~/.Trash" # Empty the Trash
+	alias ip="curl -s http://checkip.dyndns.com/ | sed 's/[^0-9\.]//g'" #IP number
+	alias du1='du -h --max-depth=1'
+	alias fn='find . -name'
+	alias h='history | tail -20'
+
+# Git
+	alias g="git"
+
+# Super user
+	alias _='sudo'
+	alias lu="awk -F":" '{ print "username: " $1 "\t\tuid:" $3 }' /etc/passwd"
+
+# Drush aliases
+	alias disable-css="drush vset preprocess_css 0 --yes"
+	alias enable-css="drush vset preprocess_css 1 --yes"
+
+# Exit mc in the last directory
+	alias mc='. ~/.local/bin/mc-wrapper'
+
+# Use ssh with sudo
+	alias ssh-sudo="ssh $1 SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass sudo -A '$2'"
+
+# Slmenu FTW!
+	alias slmenu='slmenu -i'
+
+# Use emacs deamon to edit sudo files
+	alias E="SUDO_EDITOR=\"emacsclient -c -a emacs\" sudoedit"
+
+# Archive management
+# wget -O - [url-path].tar.gz | tar xzf -
+# Example: wget http://your.domain.com/your/file.zip -O - | unzip-stream target_dir
+	alias unzip-stream="python -c \"import zipfile,sys,StringIO;zipfile.ZipFile(StringIO.StringIO(sys.stdin.read())).extractall(sys.argv[1] if len(sys.argv) == 2 else '.')\""
+
+# KeePassC FTW!
+	alias kee='keepassc -e $1 ~/Dropbox/Programs/KeePass/Database.kdb ~/Dropbox/Programs/KeePass/pwsafe.key'

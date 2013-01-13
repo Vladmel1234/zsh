@@ -1,0 +1,12 @@
+[submodule "lib/zsh-completions"]
+	path = lib/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions.git
+[submodule "lib/zsh-solarized"]
+	path = lib/zsh-solarized
+	url = https://github.com/sigurdga/gnome-terminal-colors-solarized.git
+[submodule "lib/zsh-syntax-highlighting"]
+	path = lib/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "lib/oh-my-zsh"]
+	path = lib/oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git
