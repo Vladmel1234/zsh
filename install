@@ -1,3 +1,9 @@
+#!/bin/bash
+
+# Install, if doesn't yet exists.
+[[ -z `command -v "zsh"` ]] && sudo apt-get install -y zsh
+
+# Link configuration to $HOME directory.
 ln -s .zlogout ~/.zlogout
 ln -s .zshenv ~/.zshenv
 ln -s .zshrc ~/.zshrc
