@@ -4,6 +4,6 @@
 [[ -z `command -v "zsh"` ]] && sudo apt-get install -y zsh
 
 # Link configuration to $HOME directory.
-ln -s .zlogout ~/.zlogout
-ln -s .zshenv ~/.zshenv
-ln -s .zshrc ~/.zshrc
+ln -s .zlogout $HOME/.zlogout
+ln -s .zshenv $HOME/.zshenv
+ln -s .zshrc $HOME/.zshrc
