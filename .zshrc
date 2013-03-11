@@ -59,12 +59,12 @@ export FPATH             ## Export it, duh.
 typeset -U fpath         ## Only unique entries please.
 
 # Path to binary files.
-envBins="tmux mc local slmenu gitl"
-for evnBin in $envBins; do
-	NewPath=`find $HOME -d | grep "${evnBin}/bin$"`
-	[[ -z `echo $PATH | grep $NewPath` ]] && PATH=$PATH:$NewPath
+for evnBin in `cat .gitslave | awk {'print $2'} | tr -d '"'`
+do
+	NewPath=`find $HOME -depth | grep "${evnBin}/bin$"`
+	PATH=$PATH:$NewPath
 done
+
 unset evnBin
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
-rationalize-path path    ## Sanity Check
