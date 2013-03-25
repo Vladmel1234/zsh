@@ -2,10 +2,11 @@
 # Oh-My-Zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
 ZSH=$HOME/.zsh/lib/oh-my-zsh                           	## Path to your oh-my-zsh configuration.
-source $ZSH/oh-my-zsh.sh                                ## Source it, duh.
+plugins=(command-not-found compleat extract gem git git-flow history-substring-search lol perl ssh-agent sublime)
 DISABLE_AUTO_UPDATE="true"                          	## Disable annoying weekly auto-update checks
 COMPLETION_WAITING_DOTS="true"                      	## Red dots to be displayed while waiting for completion
-plugins=(command-not-found compleat extract gem git git-flow history-substring-search lol perl ssh-agent sublime)
+
+source $ZSH/oh-my-zsh.sh                                ## Source it, duh.
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Plugins
@@ -20,10 +21,10 @@ promptinit
 prompt wunjo
 
 # Git scripts
-PATH=$PATH:$HOME/.gitl/scripts:$HOME/.gitl/lib/git-scripts
+PATH=$PATH:$HOME/.git.d/scripts:$HOME/.git.d/lib/git-scripts
 
 # Tmux powerline
-PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#I_#P") "$PWD")'
+PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
 # Midnight commander
 export MC_SKIN=$HOME/.mc/lib/mc-solarized/solarized.ini
