@@ -2,8 +2,17 @@
 
 # Install, if doesn't yet exists.
 [[ -z `command -v "zsh"` ]] && sudo apt-get install -y zsh
+chsh -s /bin/zsh
+
+sudo apt-get install -y gconf2
+cd $HOME/.zsh/lib/zsh-solarized
+./set_dark.sh && zsh
 
 # Link configuration to $HOME directory.
-ln -s .zlogout $HOME/.zlogout
-ln -s .zshenv $HOME/.zshenv
-ln -s .zshrc $HOME/.zshrc
+ln -s $HOME/.zsh/.zlogout $HOME/.zlogout
+ln -s $HOME/.zsh/.zshenv $HOME/.zshenv
+ln -s $HOME/.zsh/.zshrc $HOME/.zshrc
+
+cd $HOME
+rm .bash*
+rm .profile
