@@ -16,3 +16,6 @@ ln -s $HOME/.zsh/.zshrc $HOME/.zshrc
 cd $HOME
 rm .bash*
 rm .profile
+
+compaudit | xargs chmod g-w
+# compaudit | xargs chmod 664
