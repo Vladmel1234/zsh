@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Install, if doesn't yet exists.
 [[ -z `command -v "zsh"` ]] && sudo apt-get install -y zsh

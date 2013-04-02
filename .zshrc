@@ -30,8 +30,6 @@ PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -
 export MC_SKIN=$HOME/.mc/lib/mc-solarized/solarized.ini
 export MC_KEYMAP=$HOME/.mc/config/etc/mc.keymap
 
-source $HOME/.slmenu/slmenu
-
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Shell Configuration
 # -------------------------------------------------------------------------------------------------------------------------------------
@@ -56,11 +54,6 @@ for file in ~/.zsh/config/*; do
   [ -r "$file" ] && source "$file"
 done
 unset file
-
-# Path to search for autoloadable functions.
-fpath=( $HOME/.zsh/config/functions "$fpath[@]" )
-export FPATH             ## Export it, duh.
-typeset -U fpath         ## Only unique entries please.
 
 # Path to binary files.
 for evnBin in `cat .gitslave | awk {'print $2'} | tr -d '"'`
