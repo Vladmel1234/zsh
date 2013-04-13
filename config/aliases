@@ -39,8 +39,9 @@
 
 # Use emacs deamon to edit sudo files
 	alias E="SUDO_EDITOR=\"emacsclient -c -a emacs\" sudoedit"
+	alias emacs="emacs-snapshot-gtk"
 # Start emacs server if not running and launch emacsclient
-	alias emacsclient="exec emacsclient --alternate-editor="" -c '$@'"
+	#alias emacsclient="exec emacsclient --alternate-editor="" -c '$@'"
 
 # Archive management
 # wget -O - [url-path].tar.gz | tar xzf -
