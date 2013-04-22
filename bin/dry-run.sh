@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# http://www.findnwrite.com/musings/dry-run-in-shell-scripts/
+# http://www.unix.com/shell-programming-scripting/137309-preview-what-would-execute-my-shell-script.html
+
 # dry is a variable that indicates whether we want to do dry run or not
 # Currently dry run is enabled. To disable it, set the dry variable to any other string
 # Note: define the dry variable above the execute function below so
