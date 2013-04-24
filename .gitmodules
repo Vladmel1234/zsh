@@ -10,3 +10,6 @@
 [submodule "lib/oh-my-zsh"]
 	path = lib/oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule "lib/liquidprompt"]
+	path = lib/liquidprompt
+	url = https://github.com/nojhan/liquidprompt.git
