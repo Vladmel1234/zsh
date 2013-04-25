@@ -15,10 +15,12 @@ source $HOME/.zsh/lib/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/lib/zsh-clipboard/zsh-clipboard.zsh
 
 # Git Prompt -- https://github.com/jcorbin/zsh-git/blob/master/zshrc
-setopt promptsubst
-autoload -U promptinit
-promptinit
-prompt wunjo
+# setopt promptsubst
+# autoload -U promptinit
+# promptinit
+# prompt wunjo
+source $HOME/.zsh/lib/zsh-prompt/prompt-setup-old
+# source $HOME/.zsh/lib/zsh-liquidprompt/liquidprompt
 
 # Git scripts
 PATH=$PATH:$HOME/.git.d/scripts:$HOME/.git.d/lib/git-scripts
