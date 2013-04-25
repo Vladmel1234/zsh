@@ -22,7 +22,7 @@
 
 source $HOME/.zsh/lib/zsh-prompt/prompt-setup
 
-LP_PS1="${PROMPT} {${LP_PERM}}
+LP_PS1="[${LP_USER}${LP_HOST}] ${PROMPT} {${LP_PERM}} 
 "
 # add user, host and permissions colon
 LP_PS1="${LP_PS1}${LP_JOBS}"
@@ -31,12 +31,12 @@ LP_PS1="${LP_PS1}${LP_JOBS}"
 if [[ "$EUID" -ne "0" ]]
 then
     # path in foreground color
-    LP_PS1="${LP_PS1}${LP_PWD}${LP_PERM}${LP_VENV}${LP_PROXY}"
+    LP_PS1="${LP_PS1}${LP_PWD}${LP_VENV}${LP_PROXY}"
     # add VCS infos
     LP_PS1="${LP_PS1}${LP_VCS}"
 else
     # path in yellow
-    LP_PS1="${LP_PS1}${LP_PWD}${LP_PERM}${LP_VENV}${LP_PROXY}"
+    LP_PS1="${LP_PS1}${LP_PWD}${LP_VENV}${LP_PROXY}"
     # do not add VCS infos unless told otherwise (LP_ENABLE_VCS_ROOT)
     [[ "$LP_ENABLE_VCS_ROOT" = "1" ]] && LP_PS1="${LP_PS1}${LP_VCS}"
 fi
