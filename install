@@ -12,6 +12,7 @@ cd $HOME/.zsh/lib/zsh-solarized
 ln -s $HOME/.zsh/.zlogout $HOME/.zlogout
 ln -s $HOME/.zsh/.zshenv $HOME/.zshenv
 ln -s $HOME/.zsh/.zshrc $HOME/.zshrc
+ln -s $HOME/.zsh/.liquidpromptrc $HOME/.liquidpromptrc
 
 cd $HOME
 rm .bash*
