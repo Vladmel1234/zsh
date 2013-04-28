@@ -44,3 +44,12 @@ function tst () {
   slmenu -l 10 |
   awk '{print $1}')
 }
+
+mkcd () {
+  if [ ! -d $1 ]; then
+      mkdir -p $1;
+      cd $1;
+  else
+      echo "$1 directory exists";
+  fi
+}
