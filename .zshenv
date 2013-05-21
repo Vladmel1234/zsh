@@ -3,3 +3,4 @@
 	typeset -U fpath
 # Add zsh completions
 	fpath=($fpath $HOME/.zsh/lib/zsh-completions/src)
+	#fpath=($fpath $HOME/.zsh/completions)

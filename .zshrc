@@ -1,12 +1,11 @@
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Oh-My-Zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
-ZSH=$HOME/.zsh/lib/oh-my-zsh                           	## Path to your oh-my-zsh configuration.
+ZSH=$HOME/.zsh/lib/oh-my-zsh                          ## Path to your oh-my-zsh configuration.
 plugins=(command-not-found compleat extract gem git git-flow history-substring-search lol perl ssh-agent sublime)
 DISABLE_AUTO_UPDATE="true"                          	## Disable annoying weekly auto-update checks
 COMPLETION_WAITING_DOTS="true"                      	## Red dots to be displayed while waiting for completion
-
-source $ZSH/oh-my-zsh.sh                                ## Source it, duh.
+source $ZSH/oh-my-zsh.sh                              ## Source it, duh.
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Plugins
@@ -59,7 +58,7 @@ do
 	NewPath=`find $HOME -depth | grep "${evnBin}/bin$"`
 	PATH=$PATH:$NewPath
 done
-
 unset evnBin
+
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
