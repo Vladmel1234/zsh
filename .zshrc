@@ -27,6 +27,9 @@ PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -
 export MC_SKIN=$HOME/.mc/lib/mc-solarized/solarized.ini
 export MC_KEYMAP=$HOME/.mc/config/etc/mc.keymap
 
+# RVm
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Shell Configuration
 # -------------------------------------------------------------------------------------------------------------------------------------
@@ -62,3 +65,4 @@ unset evnBin
 
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
