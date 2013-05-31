@@ -1,2 +1,5 @@
-lib
-
+lib/zsh-completions
+lib/zsh-solarized
+lib/zsh-syntax-highlighting
+lib/oh-my-zsh
+lib/zsh-liquidprompt
