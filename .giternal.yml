@@ -1,0 +1,15 @@
+zsh-completions:
+  repo: https://github.com/zsh-users/zsh-completions.git
+  path: lib
+zsh-solarized:
+  repo: https://github.com/sigurdga/gnome-terminal-colors-solarized.git
+  path: lib
+zsh-syntax-highlighting:
+  repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+  path: lib
+oh-my-zsh:
+  repo: https://github.com/robbyrussell/oh-my-zsh.git
+  path: lib
+zsh-liquidprompt:
+  repo: https://github.com/nojhan/liquidprompt
+  path: lib
