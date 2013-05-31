@@ -9,10 +9,10 @@ cd $HOME/.zsh/lib/zsh-solarized
 ./set_dark.sh && zsh
 
 # Link configuration to $HOME directory.
-ln -s $HOME/.zsh/.zlogout $HOME/.zlogout
-ln -s $HOME/.zsh/.zshenv $HOME/.zshenv
-ln -s $HOME/.zsh/.zshrc $HOME/.zshrc
-ln -s $HOME/.zsh/.liquidpromptrc $HOME/.liquidpromptrc
+ln -s $HOME/.zsh/init/.zlogout $HOME/
+ln -s $HOME/.zsh/init/.zshenv $HOME/
+ln -s $HOME/.zsh/init/.zshrc $HOME/
+ln -s $HOME/.zsh/init/.liquidpromptrc $HOME/
 
 cd $HOME
 rm .bash*
