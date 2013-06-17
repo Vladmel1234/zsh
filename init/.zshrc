@@ -56,7 +56,7 @@ done
 unset file
 
 # Path to binary files.
-for evnBin in `cat .gitslave | awk {'print $2'} | tr -d '"'`
+for evnBin in `cat ~/.gitslave | awk {'print $2'} | tr -d '"'`
 do
 	NewPath=`find $HOME -depth | grep "${evnBin}/bin$"`
 	PATH=$PATH:$NewPath

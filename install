@@ -1,22 +1,24 @@
 #!/bin/zsh
 
 # Install, if doesn't yet exists.
-[[ -z `command -v "zsh"` ]] && sudo apt-get install -y zsh
-chsh -s /bin/zsh
+if [[ -z `command -v "zsh"` ]]; then
+	sudo apt-get install -y zsh
+	chsh -s /bin/zsh
+	compaudit | xargs chmod g-w
+fi
 
 sudo apt-get install -y gconf2
 cd $HOME/.zsh/lib/zsh-solarized
-./set_dark.sh && zsh
+./set_dark.sh
+cd -
 
 # Link configuration to $HOME directory.
-ln -s $HOME/.zsh/init/.zlogout $HOME/
-ln -s $HOME/.zsh/init/.zshenv $HOME/
-ln -s $HOME/.zsh/init/.zshrc $HOME/
-ln -s $HOME/.zsh/init/.liquidpromptrc $HOME/
+initScripts="zlogout zshenv zshrc liquidpromptrc"
+for initScript in $initScripts; do
+	ln -s $HOME/.zsh/init/.${initScript} $HOME/ > /dev/null 2>&1
+done
 
 cd $HOME
-rm .bash*
-rm .profile
-
-compaudit | xargs chmod g-w
+rm .bash*  > /dev/null 2>&1
+rm .profile  > /dev/null 2>&1
 # compaudit | xargs chmod 664
