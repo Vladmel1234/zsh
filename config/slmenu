@@ -34,6 +34,16 @@ function mux () {
 }
 
 # present all projects in tmuxinator
+function bds () {
+	bd \
+	"$(find $HOME/.tmuxinator/ -name \*.yml |
+	awk -F/ '{print $NF}' |
+	sed s:.yml::g |
+	slmenu -l 10)" &&
+	clear
+}
+
+# present all projects in tmuxinator
 function clp () {
 	cat ~/.cache/clipbored/clips | slmenu -l 10 | clip
 }
