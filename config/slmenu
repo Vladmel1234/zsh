@@ -34,11 +34,10 @@ function mux () {
 }
 
 # present all projects in tmuxinator
-function bds () {
-	bd \
-	"$(find $HOME/.tmuxinator/ -name \*.yml |
-	awk -F/ '{print $NF}' |
-	sed s:.yml::g |
+function ca () {
+	. bd -s \
+	"$(pwd |
+	tr '/' '\n' |
 	slmenu -l 10)" &&
 	clear
 }
