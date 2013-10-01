@@ -33,8 +33,8 @@ function mux () {
 	clear
 }
 
-# present all projects in tmuxinator
-function ca () {
+# present all parts of a pwd and cd into it
+function ca() {
 	. bd -s \
 	"$(pwd |
 	tr '/' '\n' |
@@ -45,11 +45,4 @@ function ca () {
 # present all projects in tmuxinator
 function clp () {
 	cat ~/.cache/clipbored/clips | slmenu -l 10 | clip
-}
-
-# Adding description and removing it afterwards! format: "keyword" "description"
-function tst () {
-	git $(cat ~/.test |
-	slmenu -l 10 |
-	awk '{print $1}')
 }
