@@ -1,23 +1,15 @@
 #!/bin/zsh
 
-# Install, if doesn't yet exists.
-if [[ -z `command -v "zsh"` ]]; then
-	sudo apt-get install -y zsh
-	chsh -s /bin/zsh
-	compaudit | xargs chmod g-w
-fi
+echo "Configuring ZSH as the default Shell"
+chsh -s /bin/zsh
+compaudit | xargs chmod g-w
 
-sudo apt-get install -y gconf2
-cd $HOME/.zsh/lib/zsh-solarized
-./set_dark.sh
-cd -
+echo "Creating all symbolic links for zsh"
+ln -sf $HOME/.zsh/init/.zlogout $HOME/ > /dev/null 2>&1
+ln -sf $HOME/.zsh/init/.zshenv $HOME/ > /dev/null 2>&1
+ln -sf $HOME/.zsh/init/.zshrc $HOME/ > /dev/null 2>&1
 
-# Link configuration to $HOME directory.
-initScripts="zlogout zshenv zshrc liquidpromptrc"
-for initScript in $initScripts; do
-	ln -s $HOME/.zsh/init/.${initScript} $HOME/ > /dev/null 2>&1
-done
-
+echo "Removing obsolete bash files"
 cd $HOME
 rm .bash*  > /dev/null 2>&1
 rm .profile  > /dev/null 2>&1
