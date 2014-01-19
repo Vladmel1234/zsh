@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Oh-My-Zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
@@ -17,9 +19,6 @@ source $HOME/.zsh/lib/zsh-clipboard/zsh-clipboard.zsh
 source $HOME/.zsh/lib/zsh-prompt/prompt-setup-old
 #source $HOME/.zsh/lib/zsh-liquidprompt/liquidprompt
 
-# Git scripts
-PATH=$PATH:$HOME/.git.d/scripts:$HOME/.git.d/lib/git-scripts
-
 # Tmux powerline
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
@@ -31,7 +30,7 @@ export MC_KEYMAP=$HOME/.mc/config/etc/mc.keymap
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # CowSay
-cowsay -f $(ls /usr/share/cowsay/cows | shuf -n 1 | cut -d. -f1) $(whatis $(ls /bin) 2>/dev/null | shuf -n 1)
+echo "Did you know that:"; whatis $(ls /bin | shuf -n 1)
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Shell Configuration
@@ -47,7 +46,7 @@ export XTERM=xterm-256color
 export XDG_CONFIG_HOME=~/.config
 
 ## Export basic editor
-export EDITOR="sublime-text-2"
+export EDITOR="subl -n"
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Paths for zsh
@@ -58,14 +57,17 @@ for file in ~/.zsh/config/*; do
 done
 unset file
 
-# Path to binary files.
-for evnBin in `cat ~/.gitslave | awk {'print $2'} | tr -d '"'`
-do
-	NewPath=`find $HOME -depth | grep "${evnBin}/bin$"`
-	PATH=$PATH:$NewPath
-done
-unset evnBin
-
+PATH=$PATH:$HOME/.git.d/scripts:$HOME/.git.d/lib/git-scripts:$HOME/.local.d/lib/
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+# Path to binary files.
+# for evnBin in `cat ~/.gitslave | awk {'print $2'} | tr -d '"'`
+# do
+# 	NewPath=`find $HOME -depth | grep "${evnBin}/bin$"`
+# 	PATH=$PATH:$NewPath
+# done
+# unset evnBin
+
+# export PATH              ## Export it, duh.
+# typeset -U path          ## Only unique entries please.

@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # find and download all files with certain extension from a website
 #	wget http://some.website.com > site
 	# find unique instances of items in a file named "list"

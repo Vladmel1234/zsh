@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # Cdargs magic
 function cv() {
   cdargs $(cat "$HOME/.cdargs" | awk '{print $1}' | slmenu -l 10) &&

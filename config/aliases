@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # Easier navigation: .., ..., ~ and -
 	alias ..="cd .."
 	alias ...="cd ../.."
@@ -49,4 +51,4 @@
 	alias unzip-stream="python -c \"import zipfile,sys,StringIO;zipfile.ZipFile(StringIO.StringIO(sys.stdin.read())).extractall(sys.argv[1] if len(sys.argv) == 2 else '.')\""
 
 # find . -type d -print0 | xargs -0 chmod 0775 # For directories
-# find . -type f -print0 | xargs -0 chmod 0664 # For files	
+# find . -type f -print0 | xargs -0 chmod 0664 # For files
