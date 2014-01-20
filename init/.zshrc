@@ -57,7 +57,7 @@ for file in ~/.zsh/config/*; do
 done
 unset file
 
-PATH=$PATH:$HOME/.git.d/scripts:$HOME/.git.d/lib/git-scripts:$HOME/.local.d/lib/
+PATH=$PATH:$HOME/.git.d/scripts:$HOME/.git.d/lib/git-scripts:$HOME/.local.d/lib/:/sbin/
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
 
