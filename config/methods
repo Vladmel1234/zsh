@@ -2,7 +2,7 @@
 
 # Cdargs magic
 function cv() {
-  cdargs $(cat "$HOME/.cdargs" | awk '{print $1}' | slmenu -l 10) &&
+  cdargs $(cat "$HOME/.cdargs" | awk '{print $1}' | fzf) &&
   cd "`cat "$HOME/.cdargsresult"`" &&
   clear
 }
@@ -14,7 +14,7 @@ function install() {
   sudo apt-get install \
   "$(dpkg -l |
   awk '{print $2}' |
-  slmenu -l 10)"
+  fzf)"
 }
 
 # Show bundles to remove
@@ -22,7 +22,7 @@ function remove() {
   sudo apt-get --purge remove \
   "$(dpkg -l |
   awk '{print $2}' |
-  slmenu -l 10)"
+  fzf)"
   }
 
 # present all projects in tmuxinator
@@ -31,19 +31,19 @@ function mux () {
   "$(find $HOME/.tmuxinator/ -name \*.yml |
   awk -F/ '{print $NF}' |
   sed s:.yml::g |
-  slmenu -l 10)" &&
+  fzf)" &&
   clear
 }
 
 # present all projects in tmuxinator
 function clp () {
-  cat ~/.cache/clipbored/clips | slmenu -l 10 | clip
+  cat ~/.cache/clipbored/clips | fzf | clip
 }
 
 # Adding description and removing it afterwards! format: "keyword" "description"
 function tst () {
   git $(cat ~/.test |
-  slmenu -l 10 |
+  fzf |
   awk '{print $1}')
 }
 

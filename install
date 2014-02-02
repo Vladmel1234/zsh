@@ -4,6 +4,9 @@ echo "Configuring ZSH as the default Shell"
 chsh -s /bin/zsh
 compaudit | xargs chmod g-w
 
+echo "Setting Solarized"
+bash $HOME/.zsh/lib/zsh-solarized/set_dark.sh
+
 echo "Creating all symbolic links for zsh"
 ln -sf $HOME/.zsh/init/.zlogout $HOME/ > /dev/null 2>&1
 ln -sf $HOME/.zsh/init/.zshenv $HOME/ > /dev/null 2>&1
