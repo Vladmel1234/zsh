@@ -55,3 +55,8 @@ mkcd () {
       echo "$1 directory exists";
   fi
 }
+
+decrypt-pdf () {
+  pdftops -upw $1 $2
+  ps2pdf $1
+}
