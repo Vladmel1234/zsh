@@ -28,7 +28,7 @@ function remove() {
 # present all projects in tmuxinator
 function mux () {
   tmuxinator start \
-  "$(find $HOME/.tmuxinator/ -name \*.yml |
+  "$(find $HOME/.tmuxinator/ -maxdepth 1 -name \*.yml |
   awk -F/ '{print $NF}' |
   sed s:.yml::g |
   fzf)" &&

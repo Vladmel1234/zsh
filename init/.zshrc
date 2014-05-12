@@ -51,21 +51,22 @@ export EDITOR="subl -n"
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Paths for zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
-# Zsh Configurations
+# Zsh Configuration
 for file in ~/.zsh/config/*; do
   [ -r "$file" ] && source "$file"
 done
 unset file
 
-# PATH=$PATH:$HOME/.git.d/scripts:$HOME/.git.d/lib/git-scripts:$HOME/.local.d/bin/:/sbin/
-# export PATH              ## Export it, duh.
-# typeset -U path          ## Only unique entries please.
+# Zsh Scripts
+PATH=${PATH}:$(find $HOME/.zsh/scripts -type d | tr '\n' ':' | sed 's/:$//')
+export PATH              ## Export it, duh.
+typeset -U path          ## Only unique entries please.
 
 # Path to binary files.
 # for evnBin in `cat ~/.gitslave | awk {'print $2'} | tr -d '"'`
 # do
 # 	NewPath=`find $HOME -depth | grep "${evnBin}/bin$"`
-# 	PATH=$PATH:$NewPath
+# 	PATH=${PATH}:${NewPath}
 # done
 # unset evnBin
 

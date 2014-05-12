@@ -11,6 +11,7 @@
 if which nsenter > /dev/null 2>&1; then
   echo 'Nsenter Installed.'
 else
+  sudo apt-get build-dep util-linux
   wget -qO- "https://www.kernel.org/pub/linux/utils/util-linux/v2.24/util-linux-2.24.tar.bz2" | tar -jxf- -C /usr/local/src
   mv /usr/local/src/util-linux-2.24 /usr/local/src/util-linux && cd /usr/local/src/util-linux
   sudo ./configure --without-ncurses && sudo make && sudo make install
