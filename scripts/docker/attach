@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Description  : Better docker attach using netcat
+# Usage        : docker attach <container>
+# Dependencies : netcat
+# Example      :
+# Notes        :

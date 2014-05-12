@@ -11,16 +11,16 @@ dry="y"
 
 # Function: execute
 function execute(){
-        # Irrespective of whether dry run is enabled or not, we display
-        # the command on the screen
+  # Irrespective of whether dry run is enabled or not, we display
+  # the command on the screen
 	echo "COMMAND: ${@}"
 
-        # if dry run is enabled then simply return
+  # if dry run is enabled then simply return
 	if [ $dry == "y" ]; then
 		return 0
 	fi
 
-        # if dry run is disabled, then execute the command
+  # if dry run is disabled, then execute the command
 	eval "$@"
 }
 

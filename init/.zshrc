@@ -57,9 +57,9 @@ for file in ~/.zsh/config/*; do
 done
 unset file
 
-PATH=$PATH:$HOME/.git.d/scripts:$HOME/.git.d/lib/git-scripts:$HOME/.local.d/bin/:/sbin/
-export PATH              ## Export it, duh.
-typeset -U path          ## Only unique entries please.
+# PATH=$PATH:$HOME/.git.d/scripts:$HOME/.git.d/lib/git-scripts:$HOME/.local.d/bin/:/sbin/
+# export PATH              ## Export it, duh.
+# typeset -U path          ## Only unique entries please.
 
 # Path to binary files.
 # for evnBin in `cat ~/.gitslave | awk {'print $2'} | tr -d '"'`
