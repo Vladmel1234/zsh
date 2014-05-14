@@ -40,13 +40,6 @@ function clp () {
   cat ~/.cache/clipbored/clips | fzf | clip
 }
 
-# Adding description and removing it afterwards! format: "keyword" "description"
-function tst () {
-  git $(cat ~/.test |
-  fzf |
-  awk '{print $1}')
-}
-
 mkcd () {
   if [ ! -d $1 ]; then
       mkdir -p $1;
@@ -59,4 +52,38 @@ mkcd () {
 decrypt-pdf () {
   pdftops -upw $1 $2
   ps2pdf $1
+}
+
+# fd - cd to selected directory
+fd() {
+  local dir
+  dir=$(find ${1:-*} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
+
+# fkill - kill process
+fkill() {
+  ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
+}
+
+# fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+  branch=$(echo "$branches" | fzf +s +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //")
+}
+
+# fco - checkout git commit
+fco() {
+  local commits commit
+  commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
+  commit=$(echo "$commits" | fzf +s +m -e) &&
+  git checkout $(echo "$commit" | sed "s/ .*//")
+}
+
+# fh - repeat history
+fh() {
+  eval $(([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s | sed 's/ *[0-9]* *//')
 }
