@@ -18,5 +18,5 @@ else
 fi
 
 CONTAINER=$1
-PID=docker inspect --format '{{ .State.Pid }}' $CONTAINER
+PID=`docker inspect --format '{{ .State.Pid }}' $CONTAINER`
 sudo nsenter -m -u -n -i -p -t $PID /bin/bash
