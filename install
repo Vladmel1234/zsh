@@ -8,6 +8,8 @@ echo "Setting Solarized"
 bash $HOME/.zsh/lib/zsh-solarized/set_dark.sh
 
 echo "Creating all symbolic links for zsh"
+ln -sf $HOME/.zsh/lib/zsh-bd/bd.zsh $HOME/.zsh/bin/bd > /dev/null 2>&1
+
 ln -sf $HOME/.zsh/init/.zlogout $HOME/ > /dev/null 2>&1
 ln -sf $HOME/.zsh/init/.zshenv $HOME/ > /dev/null 2>&1
 ln -sf $HOME/.zsh/init/.zshrc $HOME/ > /dev/null 2>&1

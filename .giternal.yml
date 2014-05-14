@@ -13,3 +13,6 @@ oh-my-zsh:
 zsh-liquidprompt:
   repo: https://github.com/nojhan/liquidprompt
   path: lib
+zsh-bd:
+  repo: https://github.com/Tarrasch/zsh-bd
+  path: lib
