@@ -29,9 +29,6 @@ export MC_KEYMAP=$HOME/.mc/config/etc/mc.keymap
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-# CowSay
-echo "Did you know that:"; whatis $(ls /bin | shuf -n 1)
-
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Shell Configuration
 # -------------------------------------------------------------------------------------------------------------------------------------
@@ -57,18 +54,13 @@ for file in ~/.zsh/config/*; do
 done
 unset file
 
+# Path to binary files.
+for evnBin in `cat ~/.gitslave | awk {'print $2'} | tr -d '"'`; do
+	[[ -d ${evnBin}/bin ]] && PATH=${PATH}:${evnBin}/bin
+done
+unset evnBin
+
 # Zsh Scripts
 PATH=${PATH}:$(find $HOME/.zsh/scripts -type d | tr '\n' ':' | sed 's/:$//')
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
-
-# Path to binary files.
-# for evnBin in `cat ~/.gitslave | awk {'print $2'} | tr -d '"'`
-# do
-# 	NewPath=`find $HOME -depth | grep "${evnBin}/bin$"`
-# 	PATH=${PATH}:${NewPath}
-# done
-# unset evnBin
-
-# export PATH              ## Export it, duh.
-# typeset -U path          ## Only unique entries please.
