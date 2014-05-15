@@ -4,5 +4,5 @@ lib/zsh-solarized
 lib/zsh-syntax-highlighting
 lib/oh-my-zsh
 lib/zsh-liquidprompt
-
 lib/zsh-bd
+lib/zsh-sub
