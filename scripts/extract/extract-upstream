@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Description  : Download & Extract a zip from a url.
+# Usage        : extract upstream-zip <URL> <Dest>
+# Dependencies : bsdtar
+# Example      : extract upstream-zip https://wordpress.org/latest.zip ~/Downloads
+# Notes        :
+# Source       : http://stackoverflow.com/a/23108309
+
+if which bsdtar > /dev/null 2>&1; then
+  echo 'I need bsdtar to run properly.'
+fi
+
+if [[ $# == 0 ]]; then
+  echo "Usage: extract-upstream [URL] [Destination]"
+fi
+
+extract_dest=$2
+if [[ -z $2 ]]; then
+  extract_dest=`pwd`
+fi
+
+file_name="$( basename "$1" )"
+case "$1" in
+  (*.tar.gz|*.tgz) wget -qO- "$1" | tar -xvzf- -C "$extract_dest" ;;
+  (*.tar.bz2|*.tbz|*.tbz2) wget -qO- "$1" | tar -xvjf- -C "$extract_dest" ;;
+  (*.tar) wget -qO- "$1" | tar -xvf- -C "$extract_dest" ;;
+  (*.gz) gunzip "$1" ;;
+  (*.bz2) bunzip2 "$1" ;;
+  (*.zip|*.war|*.jar) wget -qO- $1 | bsdtar -xvf- -C $extract_dest ;;
+  (*.rar) unrar x -ad "$1" ;;
+  (*.7z) 7za x "$1" ;;
+  (*)
+    echo "extract: '$1' cannot be extracted" 1>&2
+    success=1
+  ;;
+esac
