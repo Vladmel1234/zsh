@@ -61,6 +61,6 @@ done
 unset evnBin
 
 # Zsh Scripts
-PATH=${PATH}:$(find $HOME/.zsh/scripts -type d | tr '\n' ':' | sed 's/:$//')
+PATH=${PATH}:$(find $HOME/.zsh/libexec -type d | tr '\n' ':' | sed 's/:$//')
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
