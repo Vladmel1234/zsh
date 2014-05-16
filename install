@@ -3,6 +3,7 @@
 echo "Configuring ZSH as the default Shell"
 chsh -s /bin/zsh
 compaudit | xargs chmod g-w
+gconftool-2 -s /apps/metacity/general/num_workspaces --type int 5
 
 echo "Setting Solarized"
 bash $HOME/.zsh/lib/zsh-solarized/set_dark.sh

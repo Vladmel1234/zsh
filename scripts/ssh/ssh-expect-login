@@ -1,0 +1,17 @@
+#!/usr/bin/expect
+set timeout 2
+
+set ssh [lindex $argv 0]
+set cwd [lindex $argv 1]
+set pass [lindex $argv 2]
+
+spawn ssh "$ssh"
+
+if { $pass != "" } {
+	expect assword
+	send "$pass\n"
+	}
+
+expect "~]$"
+send "cd $cwd && clear\n"
+interact
