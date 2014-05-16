@@ -17,5 +17,5 @@ zsh-bd:
   repo: https://github.com/Tarrasch/zsh-bd
   path: lib
 zsh-sub:
-  repo: https://github.com/basecamp/sub
+  repo: https://github.com/iwfmp/sub
   path: lib
