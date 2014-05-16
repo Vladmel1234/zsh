@@ -3,6 +3,7 @@
 # Credit to where credit is due:
 # http://madebynathan.com/2011/10/04/a-nicer-way-to-use-xclip/
 # ------------------------------------------------
+
 clip() {
   local _scs_col="\e[0;32m"; local _wrn_col='\e[1;31m'; local _trn_col='\e[0;33m'
   # Check that xclip is installed.

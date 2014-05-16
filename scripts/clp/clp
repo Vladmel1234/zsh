@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-set -e
 
 command=`basename $0`
 subcommand="$1"
 case "$subcommand" in
 "" | "-h" | "--help" )
-  echo "$command: print valuable information" >&2
+  echo "$command: copy strings to clipboard" >&2
   ;;
 * )
   subcommand_path="$(command -v "$command-$subcommand" || true)"

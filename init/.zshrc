@@ -48,18 +48,19 @@ export EDITOR="subl -n"
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Paths for zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
-# Zsh Configuration
+# Zsh Configuration Files
 for configFile in $HOME/.zsh/config/*; do
   [ -r "$configFile" ] && source "$configFile"
 done
 unset configFile
 
-# Path to binary files.
+# Dotfiles Binaries
 for evnBin in `cat $HOME/.gitslave | awk {'print $2'} | tr -d '"'`; do
 	[[ -d $evnBin/bin ]] && PATH=${PATH}:${evnBin}/bin
 done
 unset evnBin
 
-PATH=${PATH}:$(find $HOME/.zsh/libexec -type d | tr '\n' ':' | sed 's/:$//')
+# Zsh Scripts Binaries
+PATH=${PATH}:$(find $HOME/.zsh/scripts -type d | tr '\n' ':' | sed 's/:$//')
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
