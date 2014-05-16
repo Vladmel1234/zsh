@@ -35,11 +35,6 @@ function mux () {
   clear
 }
 
-# present all projects in tmuxinator
-function clp () {
-  cat ~/.cache/clipbored/clips | fzf | clip
-}
-
 mkcd () {
   if [ ! -d $1 ]; then
       mkdir -p $1;

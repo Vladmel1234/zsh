@@ -59,13 +59,7 @@ for evnBin in `cat $HOME/.gitslave | awk {'print $2'} | tr -d '"'`; do
 	[[ -d $evnBin/bin ]] && PATH=${PATH}:${evnBin}/bin
 done
 unset evnBin
-export PATH              ## Export it, duh.
-typeset -U path          ## Only unique entries please.
-
-# Zsh Subs
-for subDir in $HOME/.zsh/subs/*; do
-  [[ -d $subDir/bin ]] && eval "$($subDir/bin/* init -)"
-done
-unset subDir
 
 PATH=${PATH}:$(find $HOME/.zsh/libexec -type d | tr '\n' ':' | sed 's/:$//')
+export PATH              ## Export it, duh.
+typeset -U path          ## Only unique entries please.

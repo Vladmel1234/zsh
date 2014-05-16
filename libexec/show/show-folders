@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Description  :
-# Usage        :
-# Dependencies :
-# Example      :
-# Notes        :
-
-find . -type d -print0

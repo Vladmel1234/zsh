@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+
+command=`basename $0`
+subcommand="$1"
+case "$subcommand" in
+"" | "-h" | "--help" )
+  echo "$command: print valuable information" >&2
+  ;;
+* )
+  subcommand_path="$(command -v "$command-$subcommand" || true)"
+  if [[ -x "$subcommand_path" ]]; then
+    shift
+    exec "$subcommand_path" "${@}"
+    return $?
+  else
+    echo "$command: no such command \`$subcommand'" >&2
+    exit 1
+  fi
+  ;;
+esac
