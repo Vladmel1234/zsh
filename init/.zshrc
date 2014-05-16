@@ -40,7 +40,7 @@ export LANG="en_US"
 # Find all possible options with `find /lib/terminfo /usr/share/terminfo -name "*256*"`
 export TERM=xterm-256color
 export XTERM=xterm-256color
-export XDG_CONFIG_HOME=~/.config
+export XDG_CONFIG_HOME=$HOME/.config
 
 ## Export basic editor
 export EDITOR="subl -n"
@@ -49,18 +49,23 @@ export EDITOR="subl -n"
 # Paths for zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Zsh Configuration
-for file in ~/.zsh/config/*; do
-  [ -r "$file" ] && source "$file"
+for configFile in $HOME/.zsh/config/*; do
+  [ -r "$configFile" ] && source "$configFile"
 done
-unset file
+unset configFile
 
 # Path to binary files.
-for evnBin in `cat ~/.gitslave | awk {'print $2'} | tr -d '"'`; do
-	[[ -d ${evnBin}/bin ]] && PATH=${PATH}:${evnBin}/bin
+for evnBin in `cat $HOME/.gitslave | awk {'print $2'} | tr -d '"'`; do
+	[[ -d $evnBin/bin ]] && PATH=${PATH}:${evnBin}/bin
 done
 unset evnBin
-
-# Zsh Scripts
-PATH=${PATH}:$(find $HOME/.zsh/libexec -type d | tr '\n' ':' | sed 's/:$//')
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
+
+# Zsh Subs
+for subDir in $HOME/.zsh/subs/*; do
+  [[ -d $subDir/bin ]] && eval "$($subDir/bin/* init -)"
+done
+unset subDir
+
+PATH=${PATH}:$(find $HOME/.zsh/libexec -type d | tr '\n' ':' | sed 's/:$//')
