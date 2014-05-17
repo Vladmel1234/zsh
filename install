@@ -9,7 +9,6 @@ echo "Setting Solarized"
 bash $HOME/.zsh/lib/solarized/set_dark.sh
 
 echo "Creating all symbolic links for zsh"
-ln -sf $HOME/.zsh/init/.zlogout $HOME/ > /dev/null 2>&1
 ln -sf $HOME/.zsh/init/.zshenv $HOME/ > /dev/null 2>&1
 ln -sf $HOME/.zsh/init/.zshrc $HOME/ > /dev/null 2>&1
 
@@ -17,4 +16,3 @@ echo "Removing obsolete bash files"
 cd $HOME
 rm .bash*  > /dev/null 2>&1
 rm .profile  > /dev/null 2>&1
-# compaudit | xargs chmod 664
