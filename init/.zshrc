@@ -5,9 +5,9 @@
 # -------------------------------------------------------------------------------------------------------------------------------------
 ZSH=$HOME/.zsh/lib/oh-my-zsh        ## Path to your oh-my-zsh configuration.
 plugins=(
-  # chruby                          ## Change ruby environment autocomplete.
+  # chruby                          ## Change ruby environment autocomplete. Requires chruby.
   colored-man                       ## Colorize man pages.
-  colorize                          ## Highligt file content based on file extension.
+  colorize                          ## Highligt file content based on file extension. Requires python-pygments.
   command-not-found                 ## Suggest a package to install if the command is not found.
   # common-aliases                  ## Add aliases for common tasks.
   compleat                          ## Generate command-line completions using a simple DSL.
@@ -17,12 +17,12 @@ plugins=(
   extract                           ## Easily extract compressed files.
   git                               ## Adds several git aliases and increase the completion function provided by zsh.
   # git-extras                      ## Completion script for git-extras.
-  # git-flow                        ## Achieve git-flow completion nirvana.
+  # git-flow                        ## Achieve git-flow completion nirvana. Requires git-flow.
   # gpg-agent                       ## Start a gpg-agent on startup (?).
   history-substring-search          ## Write a string and use up/down-arrows to search it through history.
   iwhois                            ## Provide a whois command with a more accurate and up to date list of whois.
   knife                             ## Autocomplete for knife command.
-  # repo                            ## Automatic completion for the repo command line tool.
+  # repo                            ## Automatic completion for the repo command line tool. Requires Repo.
   # rsync                           ## Rsync aliases.
   ssh-agent                         ## SSH agent forwarding support.
   sublime                           ## Sublime Text 2 Aliases.
