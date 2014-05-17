@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Description  : Silently remove all images.
+# Usage        : docker rmi-all
+# Dependencies :
+# Example      :
+# Notes        :
+# Source       :
+
+docker rmi $(docker ps -a -q) 2>&1

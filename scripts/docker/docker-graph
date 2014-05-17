@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Description  : Graph the dependencies among your images.
+# Usage        : docker graph
+# Dependencies : graphviz
+# Example      :
+# Notes        :
+# Source       : http://www.centurylinklabs.com/15-quick-docker-tips/
+
+docker images -viz | dot -Tpng -o docker.png
+python -m SimpleHTTPServer
+open http://0.0.0.0:8000/docker.png | xdg-open http://0.0.0.0:8000/docker.png

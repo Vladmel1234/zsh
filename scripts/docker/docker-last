@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Description  : Prints the ID of the last used docker container.
+# Usage        : docker last
+# Dependencies :
+# Example      :
+# Notes        :
+# Source       : http://www.centurylinklabs.com/15-quick-docker-tips/
+
+docker ps -l -q

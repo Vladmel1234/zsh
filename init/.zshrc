@@ -4,7 +4,7 @@
 # Oh-My-Zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
 ZSH=$HOME/.zsh/lib/oh-my-zsh                          ## Path to your oh-my-zsh configuration.
-plugins=(command-not-found compleat extract gem git git-flow history-substring-search lol perl ssh-agent sublime)
+plugins=(command-not-found compleat dirhistory docker extract git git-extras git-flow history-substring-search knife lol repo ssh-agent sublime vagrant)
 DISABLE_AUTO_UPDATE="true"                            ## Disable annoying weekly auto-update checks
 COMPLETION_WAITING_DOTS="true"                        ## Red dots to be displayed while waiting for completion
 source $ZSH/oh-my-zsh.sh                              ## Source it, duh.
