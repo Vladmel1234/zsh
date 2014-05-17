@@ -1,6 +1,5 @@
 lib/
 lib/completions
-lib/history-substring-search
 lib/oh-my-zsh
 lib/solarized
 lib/syntax-highlighting
