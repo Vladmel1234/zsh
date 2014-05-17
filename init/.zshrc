@@ -6,7 +6,6 @@
 ZSH=$HOME/.zsh/lib/oh-my-zsh        ## Path to your oh-my-zsh configuration.
 plugins=(
   # chruby                          ## Change ruby environment autocomplete.
-  # colemak                         ## ???
   colored-man                       ## Colorize man pages.
   colorize                          ## Highligt file content based on file extension.
   command-not-found                 ## Suggest a package to install if the command is not found.
