@@ -6,9 +6,12 @@
 ZSH=$HOME/.zsh/lib/oh-my-zsh        ## Path to your oh-my-zsh configuration.
 plugins=(
   # chruby                          ## Change ruby environment autocomplete.
+  # colemak                         ## ???
+  # colored-man                     ## ???
+  # colorize                        ## ???
   command-not-found                 ## Suggest a package to install if the command is not found.
-  compleat                          ## Generate command-line completions using a simple DSL.
   # common-aliases                  ## Add aliases for common tasks.
+  compleat                          ## Generate command-line completions using a simple DSL.
   dirhistory                        ## Use Alt+left/right-arrow to cd through recently visited folders.
   docker                            ## Docker autocompletes.
   emacs                             ## Use emacs daemon capability.
@@ -26,6 +29,7 @@ plugins=(
   sublime                           ## Sublime Text 2 Aliases.
   systemadmin                       ## System administrator utils.
   tmuxinator                        ## Tmuxinator autocomplete.
+  # torrent                         ## Get a torrent using a magnet link.
   vagrant                           ## Vagrat autocomplete.
   web-search                        ## Search a string in one of the search-engines.
 )
