@@ -1,18 +1,18 @@
-zsh-completions:
+completions:
   repo: https://github.com/zsh-users/zsh-completions.git
   path: lib
-zsh-solarized:
+solarized:
   repo: https://github.com/sigurdga/gnome-terminal-colors-solarized.git
   path: lib
-zsh-syntax-highlighting:
+syntax-highlighting:
   repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
   path: lib
 oh-my-zsh:
   repo: https://github.com/robbyrussell/oh-my-zsh.git
   path: lib
-zsh-liquidprompt:
+liquidprompt:
   repo: https://github.com/nojhan/liquidprompt
   path: lib
-zsh-bd:
+bd:
   repo: https://github.com/Tarrasch/zsh-bd
   path: lib

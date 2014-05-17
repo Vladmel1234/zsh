@@ -3,7 +3,7 @@
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Enable shell prompt
 # -------------------------------------------------------------------------------------------------------------------------------------
-fpath=($fpath $HOME/.zsh/lib/zsh-prompt)
-fpath=($fpath $HOME/.zsh/lib/zsh-completions/src)
+fpath=($fpath $HOME/.zsh/lib/prompt)
+fpath=($fpath $HOME/.zsh/lib/completions/src)
 fpath=($fpath $HOME/.zsh/subs/show/bin)
 typeset -U fpath

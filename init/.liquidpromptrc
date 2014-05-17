@@ -8,7 +8,7 @@
 # you can load the corresponding files here:
 #source ~/code/liquidprompt/nojhan.theme
 #LP_PS1_FILE="~/code/liquidprompt/nojhan.ps1"
-LP_PS1_FILE="$HOME/.zsh/lib/zsh-prompt/custom-prompt.ps1"
+LP_PS1_FILE="$HOME/.zsh/lib/prompt/custom-prompt.ps1"
 
 #############
 # BEHAVIOUR #

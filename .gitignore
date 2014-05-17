@@ -1,8 +1,8 @@
 lib/
-lib/zsh-completions
-lib/zsh-solarized
-lib/zsh-syntax-highlighting
+lib/completions
+lib/solarized
+lib/syntax-highlighting
 lib/oh-my-zsh
-lib/zsh-liquidprompt
-lib/zsh-bd
-lib/zsh-sub
+lib/liquidprompt
+lib/bd
+lib/sub

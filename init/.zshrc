@@ -12,12 +12,12 @@ source $ZSH/oh-my-zsh.sh                              ## Source it, duh.
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Plugins
 # -------------------------------------------------------------------------------------------------------------------------------------
-source $HOME/.zsh/lib/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $HOME/.zsh/lib/zsh-clipboard/zsh-clipboard.zsh
+source $HOME/.zsh/lib/syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.zsh/lib/clipboard/zsh-clipboard.zsh
 
 # Git Prompt -- https://github.com/jcorbin/zsh-git/blob/master/zshrc
-source $HOME/.zsh/lib/zsh-prompt/prompt-setup-old
-#source $HOME/.zsh/lib/zsh-liquidprompt/liquidprompt
+source $HOME/.zsh/lib/prompt/prompt-setup-old
+#source $HOME/.zsh/lib/liquidprompt/liquidprompt
 
 # Tmux powerline
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
