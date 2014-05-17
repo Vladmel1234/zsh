@@ -1,8 +1,7 @@
 lib/
 lib/completions
+lib/history-substring-search
+lib/oh-my-zsh
 lib/solarized
 lib/syntax-highlighting
-lib/oh-my-zsh
-lib/liquidprompt
-lib/bd
-lib/sub
+lib/zaw

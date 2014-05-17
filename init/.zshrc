@@ -3,21 +3,47 @@
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Oh-My-Zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
-ZSH=$HOME/.zsh/lib/oh-my-zsh                          ## Path to your oh-my-zsh configuration.
-plugins=(command-not-found compleat dirhistory docker extract git git-extras git-flow history-substring-search knife lol repo ssh-agent sublime vagrant)
-DISABLE_AUTO_UPDATE="true"                            ## Disable annoying weekly auto-update checks
-COMPLETION_WAITING_DOTS="true"                        ## Red dots to be displayed while waiting for completion
-source $ZSH/oh-my-zsh.sh                              ## Source it, duh.
+ZSH=$HOME/.zsh/lib/oh-my-zsh        ## Path to your oh-my-zsh configuration.
+plugins=(
+  # chruby                          ## Change ruby environment autocomplete.
+  command-not-found                 ## Suggest a package to install if the command is not found.
+  compleat                          ## Generate command-line completions using a simple DSL.
+  # common-aliases                  ## Add aliases for common tasks.
+  dirhistory                        ## Use Alt+left/right-arrow to cd through recently visited folders.
+  docker                            ## Docker autocompletes.
+  emacs                             ## Use emacs daemon capability.
+  extract                           ## Easily extract compressed files.
+  git                               ## Adds several git aliases and increase the completion function provided by zsh.
+  # git-extras                      ## Completion script for git-extras.
+  # git-flow                        ## Achieve git-flow completion nirvana.
+  # gpg-agent                       ## Start a gpg-agent on startup (?).
+  history-substring-search          ## Write a string and use up/down-arrows to search it through history.
+  iwhois                            ## Provide a whois command with a more accurate and up to date list of whois.
+  knife                             ## Autocomplete for knife command.
+  # repo                            ## Automatic completion for the repo command line tool.
+  # rsync                           ## Rsync aliases.
+  ssh-agent                         ## SSH agent forwarding support.
+  sublime                           ## Sublime Text 2 Aliases.
+  systemadmin                       ## System administrator utils.
+  tmuxinator                        ## Tmuxinator autocomplete.
+  vagrant                           ## Vagrat autocomplete.
+  web-search                        ## Search a string in one of the search-engines.
+)
+DISABLE_AUTO_UPDATE="true"          ## Disable annoying weekly auto-update checks
+COMPLETION_WAITING_DOTS="true"      ## Red dots to be displayed while waiting for completion
+source $ZSH/oh-my-zsh.sh            ## Source it, duh.
+
+# colemak colored-man colorize
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Plugins
 # -------------------------------------------------------------------------------------------------------------------------------------
 source $HOME/.zsh/lib/syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/lib/clipboard/zsh-clipboard.zsh
-
-# Git Prompt -- https://github.com/jcorbin/zsh-git/blob/master/zshrc
 source $HOME/.zsh/lib/prompt/prompt-setup-old
+source $HOME/.zsh/lib/zaw/zaw.zsh
 #source $HOME/.zsh/lib/liquidprompt/liquidprompt
+#source $HOME/.zsh/lib/bd/bd.zsh
 
 # Tmux powerline
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'

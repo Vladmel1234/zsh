@@ -6,4 +6,4 @@
 # Example      :
 # Notes        :
 
-pwd | clip
+pwd | tr -d "\r\n" | clip
