@@ -6,4 +6,4 @@
 # Example      :
 # Notes        :
 
-find . -type d -print0 | xargs -0 chmod 0775
+find . -type d -print0 | xargs -0 chmod 0755
