@@ -10,8 +10,8 @@
 if which netcat > /dev/null 2>&1; then
   echo 'Netcat Installed.'
 else
-  sudo apt-get install -y sharutils
-  curl -s https://raw.github.com/henrik-muehe/docker-ssh/master/install | /bin/bash
+  sudo apt-get install -y sharutils curl
+  curl -s https://raw.githubusercontent.com/henrik-muehe/docker-ssh/master/install | /bin/bash
 fi
 
 CONTAINER=$1

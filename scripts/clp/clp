@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Description  :
+# Usage        :
+# Dependencies :
+# Example      :
+# Notes        :
+# Source       :
+
 command=`basename $0`
 subcommand="$1"
 case "$subcommand" in

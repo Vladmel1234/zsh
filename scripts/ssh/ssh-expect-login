@@ -1,4 +1,12 @@
 #!/usr/bin/expect
+
+# Description  :
+# Usage        :
+# Dependencies :
+# Example      :
+# Notes        :
+# Source       :
+
 set timeout 2
 
 set ssh [lindex $argv 0]

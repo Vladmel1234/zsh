@@ -5,6 +5,6 @@
 # Dependencies :
 # Example      :
 # Notes        :
-# Source       :
+# Source       : http://www.revsys.com/writings/quicktips/ssh-tunnel.html
 
 ssh '$1' SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass sudo -A '$2'

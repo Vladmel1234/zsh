@@ -1,6 +1,11 @@
 #!/bin/bash
-# A very simple Bash script to download a YouTube video 
-# and extract the music file from it. 
+
+# Description  : Download a YouTube video and extract the music file from it.
+# Usage        :
+# Dependencies :
+# Example      :
+# Notes        :
+# Source       :
 
 evnDependencies="youtube-dl ffmpeg lame"
 for evnDependency in $evnDependencies; do
@@ -8,15 +13,15 @@ for evnDependency in $evnDependencies; do
 done
 
 cd ~/Downloads
-address=$1 
-regex='v=(.*)' 
-if [[ $address =~ $regex ]]; then 
-	video_filename="$(youtube-dl --get-filename $address)" 
+address=$1
+regex='v=(.*)'
+if [[ $address =~ $regex ]]; then
+	video_filename="$(youtube-dl --get-filename $address)"
 	video_title="$(youtube-dl --get-title $address)"
-	youtube-dl $address 
-	avconv -i $video_filename "$video_title".wav 
-	lame "$video_title".wav "$video_title".mp3 
-	rm $video_filename "$video_title".wav 
-else 
-	echo "Sorry but the system encountered a problem." 
+	youtube-dl $address
+	avconv -i $video_filename "$video_title".wav
+	lame "$video_title".wav "$video_title".mp3
+	rm $video_filename "$video_title".wav
+else
+	echo "Sorry but the system encountered a problem."
 fi
