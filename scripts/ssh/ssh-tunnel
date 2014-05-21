@@ -8,6 +8,7 @@
 # Source       : http://www.noah.org/wiki/SSH_tunnel
 # Source       : http://unix.stackexchange.com/a/46271
 # Source       : http://stackoverflow.com/a/4396415/865268
+# Source       : http://erik.torgesta.com/2013/12/creating-a-persistent-ssh-tunnel-in-ubuntu/
 
 # Set up autossh (or just ssh tunnel) in the background
 #   + Just add -fqTN flags to ssh

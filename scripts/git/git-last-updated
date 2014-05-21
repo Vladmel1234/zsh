@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Description  :
+# Usage        :
+# Dependencies :
+# Example      :
+# Notes        :
+# Source       :
+
+git branch -vv --color=always | while read; do echo -e $(git log -1 --format=%ci $(echo "_$REPLY" | awk '{print $2}' | perl -pe 's/\e\[?.*?[\@-~]//g') 2> /dev/null || git log -1 --format=%ci)" $REPLY"; done | sort -r | cut -d ' ' -f -1,4-
