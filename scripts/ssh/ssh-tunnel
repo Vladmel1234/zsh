@@ -2,9 +2,18 @@
 
 # Description  :
 # Usage        :
-# Dependencies :
+# Dependencies : autossh, openssh-server
 # Example      :
 # Notes        :
-# Source       : http://www.revsys.com/writings/quicktips/ssh-tunnel.html
+# Source       : http://www.noah.org/wiki/SSH_tunnel
+# Source       : http://unix.stackexchange.com/a/46271
+# Source       : http://stackoverflow.com/a/4396415/865268
 
-ssh '$1' SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass sudo -A '$2'
+# Set up autossh (or just ssh tunnel) in the background
+#   + Just add -fqTN flags to ssh
+# List all avaialable ssh tunnels
+#   + ps aux | grep ssh
+#   + netstat -n --protocol inet | grep ':22'
+#   + sudo lsof -i -n | egrep '\<ssh\>'
+# Add "Host *.tunnel" to ssh_config with proxy_command(?)
+# ssh name-spacing - divide all hosts into different files

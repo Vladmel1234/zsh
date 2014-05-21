@@ -1,62 +1,14 @@
 #!/usr/bin/php
 <?php
+
 /**
- * [[http://leehblue.com/sync-local-and-remote-databases/][Sync Local and remote DBs]]
- * This script enables you to copy the structure and content of databases back and
- * forth between remote and local databases. Remote databases are accessed through
- * SSH tunnels.
- *
- * This script operates in two modes. The mode is passed in the first parameter
- * -- put: Copy a local database to a remote server
- * -- get: Copy a remote database to a local server
- *
- * When using a config.ini file to specify your database credentials the format is:
- *
- * [remote]
- * ssh      = user@server.com
- * username = remoteDbUsername
- * password = remoteDbPassword
- * database = remoteDbName
- *
- * [local]
- * username = localDbUsername
- * password = localDbPassword
- * database = localDbName
- *
- *
- * Example usage: Replace your local database with a remote database
- * dbsync.php get
- *
- * Example usage: Replace a remote database with your local database
- * dbsync.php put
- *
- * Example usage using extrenal config file: Replace a remote database with your local database
- * dbsync.php put path/to/config.ini
+ * Description  : Sync MongoDB from remote to local host.
+ * Usage        : db sync-mongo [get|put] [path/to/config.ini]
+ * Dependencies : php, mongodb
+ * Example      : db sync-mogno get config.ini
+ * Notes        : requires a config.ini file (see source for explaination)
+ * Source       : http://leehblue.com/sync-local-and-remote-databases/
  */
-
-/**
- * If you have your .ssh/config file setup you can use this syntax
- *  $sshServer = 'server';
- * If you are not using your .ssh/config file you should use this syntax
- *  $sshServer = 'user@server.com
- *
- * // SSH server connection string
- * $sshServer = 'user@host.com';
- *
- * // Remote database configuration
- * $rDbUser = 'remoteDbUsername';
- * $rDbPass = 'remoteDbPassword';
- * $rDbName = 'remoteDbName';
- *
- * // Local database configuration
- * $lDbUser = 'localDbUsername';
- * $lDbPass = 'localDbPassword';
- * $lDbName = 'localDbName';
- *
- * ### Idea for using tar for mongo backup from http://linux.icydog.net/ssh/piping.php ###
-*/
-
-/** End of configuration settings. Do not edit below this line **/
 
 $mode = $argv[1];
 
