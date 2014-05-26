@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Description  :
-# Usage        :
+# Description  : Recursively change permissions of all the directories in a directory to "fresh" start.
+# Usage        : chmod init-folders
 # Dependencies :
 # Example      :
 # Notes        :
-# Source       :
+# Source       : http://superuser.com/a/91938
 
 find . -type d -print0 | xargs -0 chmod 0755

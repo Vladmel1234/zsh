@@ -2,8 +2,8 @@
 
 # Description  : Download & Extract a compressed file from a url.
 # Usage        : extract-upstream <URL> <Dest>
-# Dependencies : bsdtar, tar, wget, gunzip, bunzip2, unrar,
-# Example      : extract upstream https://wordpress.org/latest.zip ~/Downloads
+# Dependencies : bsdtar, tar, wget, gunzip, bunzip2, unrar, ???
+# Example      : extract upstream "http://wordpress.org/latest.zip" ~/Downloads
 # Notes        :
 # Source       : http://stackoverflow.com/a/23108309; oh-my-zsh extract plugin
 

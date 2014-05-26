@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# Description  :
-# Usage        :
+# Description  : Create shell sub commands by hierarchy on top of an existing command.
+# Usage        : <command> <sub-command>
 # Dependencies :
 # Example      :
-# Notes        :
-# Source       :
+# Notes        : Generic script. Fallback to the original command, if there is one.
+# Source       : http://stackoverflow.com/q/23683860/865268
 
 set -e
 

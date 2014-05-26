@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# Description  :
-# Usage        :
+# Description  : List branches by their update date and print information of each.
+# Usage        : git latest-update
 # Dependencies :
 # Example      :
 # Notes        :
-# Source       :
+# Source       : http://stackoverflow.com/a/18767922/865268
 
 git branch -vv --color=always |
 while read; do
