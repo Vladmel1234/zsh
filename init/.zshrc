@@ -52,7 +52,7 @@ source $HOME/.zsh/lib/zaw/zaw.zsh
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
 # Midnight commander
-export MC_SKIN=$HOME/.mc/lib/mc-solarized/solarized.ini
+export MC_SKIN=$HOME/.mc/lib/solarized/solarized.ini
 export MC_KEYMAP=$HOME/.mc/config/etc/mc.keymap
 
 # RVM
