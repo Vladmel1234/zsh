@@ -88,7 +88,7 @@ unset configFile
 
 # Dotfiles Binaries
 for evnBin in `cat $HOME/.gitslave | awk {'print $2'} | tr -d '"'`; do
-	[[ -d $evnBin/bin ]] && PATH=${PATH}:${evnBin}/bin
+	[[ -d $evnBin/bin ]] && PATH=${PATH}:$HOME/${evnBin}/bin
 done
 unset evnBin
 
