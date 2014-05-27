@@ -2,7 +2,7 @@
 
 # Description  : Download & Extract a compressed file from a url.
 # Usage        : extract-upstream <URL> <Dest>
-# Dependencies : bsdtar, tar, wget, gunzip, bunzip2, unrar, ???
+# Dependencies : bsdtar, tar, wget, gunzip, bunzip2, unrar, p7zip
 # Example      : extract upstream "http://wordpress.org/latest.zip" ~/Downloads
 # Notes        :
 # Source       : http://stackoverflow.com/a/23108309; oh-my-zsh extract plugin
@@ -21,11 +21,12 @@ case "$1" in
   (*.tar.gz|*.tgz) wget -qO- "$1" | tar -xvzf- -C "$EXTRACT_DEST" ;;
   (*.tar.bz2|*.tbz|*.tbz2) wget -qO- "$1" | tar -xvjf- -C "$EXTRACT_DEST" ;;
   (*.tar) wget -qO- "$1" | tar -xvf- -C "$EXTRACT_DEST" ;;
-  (*.gz) gunzip "$1" ;;
-  (*.bz2) bunzip2 "$1" ;;
+  # (*.gz) gunzip `wget "$1"` ;;
+  (*.gz) wget -qO- "$1" | 7z -si -tgzip x -o$EXTRACT_DEST ;;
+  # (*.bz2) bunzip2 `wget "$1"` ;;
   (*.zip) wget -qO- $1 | bsdtar -xvf- -C $EXTRACT_DEST ;;
   (*.rar) unrar x -ad "$1" ;;
-  (*.7z) 7za x "$1" ;;
-  (*.deb) 7za x "$1" ;;
+  # (*.7z) 7za x "$1" ;;
+  (*.7z) wget -qO- "$1" | 7za -si -t7z x -o$EXTRACT_DEST ;;
   (*) echo "extract: '$1' cannot be extracted" 1>&2 ;;
 esac
