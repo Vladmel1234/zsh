@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# Description  :
-# Usage        :
-# Dependencies : autossh, openssh-server
-# Example      :
-# Notes        :
-# Source       : http://www.noah.org/wiki/SSH_tunnel
-# Source       : http://unix.stackexchange.com/a/46271
-# Source       : http://stackoverflow.com/a/4396415/865268
-# Source       : http://erik.torgesta.com/2013/12/creating-a-persistent-ssh-tunnel-in-ubuntu/
-
 # Set up autossh (or just ssh tunnel) in the background
 #   + Just add -fqTN flags to ssh
 # List all avaialable ssh tunnels
@@ -17,4 +7,48 @@
 #   + netstat -n --protocol inet | grep ':22'
 #   + sudo lsof -i -n | egrep '\<ssh\>'
 # Add "Host *.tunnel" to ssh_config with proxy_command(?)
-# ssh name-spacing - divide all hosts into different files
+
+#!/bin/bash
+
+# Description  : Proxy an ssh connection to a tunnel via <instance-name>.tunnel
+# Usage        : ssh <instance-name>.tunnel <port>
+# Dependencies : nc, ssh, autossh, corkscrew
+# Example      : ssh wix-people-aws.tunnel
+# Notes        : Called from ~/.ssh/config file
+# Source       : http://www.noah.org/wiki/SSH_tunnel
+# Source       : http://unix.stackexchange.com/a/46271
+# Source       : http://stackoverflow.com/a/4396415/865268
+# Source       : http://erik.torgesta.com/2013/12/creating-a-persistent-ssh-tunnel-in-ubuntu/
+# Source       : http://backdrift.org/transparent-proxy-with-ssh
+# Source       : http://blog.i-evaluation.com/2013/09/21/tunnelling-using-ec2-as-web-proxy-complete-guide/
+# Source       : http://www.rohanjain.in/configure-ssh-to-handle-proxies-and-tunnels-seamlessly/
+
+# Search for nc dependency
+which nc >/dev/null 2>/dev/null
+if [ "$?" != "0" ]; then
+  echo "Please install nc / netcat first."
+  exit 1
+fi
+
+# Extract parameters
+HOST=$(echo $1 | sed 's/.tunnel//')
+PORT=$2
+
+# Check parameters
+if [ "$HOST" == "" ] || [ "$PORT" == "" ]; then
+  echo "Usage: $0 instance-name.tunnel <port>"
+  exit 1
+fi
+
+# Extract instance id
+# ID=$(docker ps | grep " "$HOST" " | awk '{print $1}')
+# if [ "$ID" == "" ]; then
+#   echo "Unknown docker instance name." >&2
+#   exit 1
+# fi
+
+# Extract instance IP
+# IP=$(docker inspect $ID | grep "IPAddress" | cut -d ':' -f 2 | sed 's/[ ",]//g')
+
+# Proxy connection to instance
+nc $IP $PORT

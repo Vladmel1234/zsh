@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Description  : Silently remove all stopped containers.
+# Usage        : aws-proxy <on|off>
+# Dependencies :
+# Example      :
+# Notes        : Hitting ctrl-c while tunneled will exit the tunnel and turn the proxies off.
+# Source       : http://frankhq.io/blog/2012/11/14/how-to-setup-a-private-proxy-server-on-ec2-in-under-10-minutes/
+
+STATE=$1
+
+# Get a list of network services: networksetup -listallnetworkservices
+NETWORKSERVICE=Wi-Fi
+
+# Local port
+PORT=3128
+
+# Remote Host & Port
+HOST=localhost
+HOST_PORT=8888
+
+# SSH connection string
+CONNECTION="$HOME/.ssh/kp-xxx.pem ubuntu@ec2-X-X-X-X.compute-1.amazonaws.com"
+
+########################################################################
+
+sudo echo 'Sudo Up!'
+
+proxy_on() {
+  echo 'Proxy On'
+  sudo networksetup -setwebproxy $NETWORKSERVICE $HOST $PORT
+  sudo networksetup -setsecurewebproxy $NETWORKSERVICE $HOST $PORT
+  ssh -L $PORT:$HOST:$HOST_PORT -N -i $CONNECTION
+}
+
+proxy_off() {
+  echo 'Proxy Off'
+  sudo networksetup -setwebproxystate $NETWORKSERVICE off
+  sudo networksetup -setsecurewebproxystate $NETWORKSERVICE off
+}
+
+control_c() {
+  echo '* Exiting'
+  proxy_off
+  exit $?
+}
+
+trap control_c INT
+
+if [[ $STATE = 'on' || $STATE = '' ]]; then
+  proxy_on
+elif [[ $STATE = 'off' ]]; then
+  proxy_off
+fi
