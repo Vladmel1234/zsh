@@ -1,9 +1,9 @@
 #!/usr/bin/expect
 
-# Description  :
-# Usage        :
-# Dependencies :
-# Example      :
+# Description  : SSH to a server with tty and execute a command.
+# Usage        : ssh <server> <command>
+# Dependencies : expect, ssh
+# Example      : ssh er-web01 "cd /var/www; clear"
 # Notes        :
 # Source       :
 
