@@ -6,6 +6,7 @@
 # Example      :
 # Notes        : Hitting ctrl-c while tunneled will exit the tunnel and turn the proxies off.
 # Source       : http://frankhq.io/blog/2012/11/14/how-to-setup-a-private-proxy-server-on-ec2-in-under-10-minutes/
+# Source       : http://blog.i-evaluation.com/2013/09/21/tunnelling-using-ec2-as-web-proxy-complete-guide/
 
 STATE=$1
 

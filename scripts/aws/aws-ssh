@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Description  : Proxy an ssh connection to a aws instance by name.
+# Usage        : ssh <instance-name>.aws <port>
+# Dependencies : nc, awscli, ssh
+# Example      : ssh LC-web01.aws
+# Notes        : Called from ~/.ssh/config file
+# Source       : http://alestic.com/2013/11/aws-cli-query
+
+# Search for nc dependency
+which nc >/dev/null 2>/dev/null
+if [ "$?" != "0" ]; then
+  echo "Please install nc / netcat first."
+  exit 1
+fi
+
+# Extract parameters
+HOST=$(echo $1 | sed 's/.aws//')
+PORT=$2
+
+# Check parameters
+if [ "$HOST" == "" ] || [ "$PORT" == "" ]; then
+  echo "Usage: $0 instance-name.aws <port>"
+  exit 1
+fi
+
+# Extract instance id
+ID=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=${HOST}*' --output text --query 'Reservations[*].Instances[*].InstanceId')
+if [ "$ID" == "" ]; then
+  echo "Unknown aws instance name." >&2
+  exit 1
+fi
+
+# Extract instance IP
+IP=$(aws ec2 describe-instances --instance-ids $instance_id --output text --query 'Reservations[*].Instances[*].PublicIpAddress')
+
+# Proxy connection to instance
+nc $IP $PORT
