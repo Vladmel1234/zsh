@@ -4,7 +4,7 @@
 # Usage        : chmod init-files
 # Dependencies :
 # Example      :
-# Notes        :
+# Notes        : See other examples in the attached Source URL
 # Source       : http://superuser.com/a/91938
 
 find . -type f -print0 | xargs -0 chmod 0644

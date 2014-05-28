@@ -34,8 +34,8 @@ fi
 # Extract container id
 ID=$(docker ps | grep " "$HOST" " | awk '{print $1}')
 if [ "$ID" == "" ]; then
-        echo "Unknown docker container name." >&2
-        exit 1
+  echo "Unknown docker container name." >&2
+  exit 1
 fi
 
 # Extract container IP
