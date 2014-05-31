@@ -11,6 +11,7 @@
 # Source       : http://stackoverflow.com/a/4396415/865268
 # Source       : http://erik.torgesta.com/2013/12/creating-a-persistent-ssh-tunnel-in-ubuntu/
 # Source       : http://stackoverflow.com/a/15198031/865268
+# Source       : http://docstore.mik.ua/orelly/networking_2ndEd/ssh/ch09_02.htm
 
 # Set up autossh (or just ssh tunnel) in the background
 #   + Just add -fqTN flags to ssh
