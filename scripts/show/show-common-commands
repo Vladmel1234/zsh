@@ -10,9 +10,10 @@
 export HISTFILE=~/.zsh_history
 fc -R
 
-fc -l -10 |
-awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' |
-grep -v "./" |
-column -c3 -s " " -t |
-sort -nr |
-nl
+fc -l -10 |            # List history from .zsh_history
+awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | # Create statistics usage
+grep -v "./" |         # Print all results buy ones containing "./"
+column -c3 -s " " -t | # Divide the information to columns
+sort -nr |             # Sort the list by numeric, reversed
+nl |                   # Add line numbers
+head -n 10             # Show only top 10 results
