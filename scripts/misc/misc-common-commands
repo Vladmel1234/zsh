@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Description  : List the most commonly used commands and their statistics.
+# Usage        : misc common-commands
+# Dependencies :
+# Example      :
+# Notes        :
+# Source       : http://linux.byexamples.com/archives/332/what-is-your-10-common-linux-commands/
+
+history |
+awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' |
+grep -v "./" |
+column -c3 -s " " -t |
+sort -nr |
+nl |
+head -n10
