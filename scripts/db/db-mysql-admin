@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ -f /.mysql_admin_created ]; then
+  echo "MySQL 'admin' user already created!"
+  exit 0
+fi
+
+/usr/bin/mysqld_safe > /dev/null 2>&1 &
+
+DB_PASSWORD=${MYSQL_PASS:-$(pwgen -s 12 1)}
+DB_PASSWORD='zxasqw12'
+DB_USER='admin'
+_word=$( [ ${MYSQL_PASS} ] && echo "preset" || echo "random" )
+
+echo "=> Creating MySQL ${DB_USER} user with ${_word} password"
+RET=1
+while [[ RET -ne 0 ]]; do
+  sleep 5
+  mysql -uroot -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
+  RET=$?
+done
+
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO '$DB_USER'@'%' WITH GRANT OPTION"
+
+mysqladmin -uroot shutdown
+
+echo "=> Done!"
+export DB_PASSWORD
+export DB_USER
+touch /.mysql_admin_created
+
+echo "========================================================================"
+echo "You can now connect to this MySQL Server using:"
+echo ""
+echo "    mysql -u$DB_USER -p$DB_PASSWORD -h<host> -P<port>"
+echo ""
+echo "Please remember to change the above password as soon as possible!"
+echo "MySQL user 'root' has no password but only allows local connections"
+echo "========================================================================"

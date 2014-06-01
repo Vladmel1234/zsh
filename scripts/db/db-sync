@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+# Description  : Sync DB script for MySQL, Mongo, Postgres.
+# Usage        : db sync -[m <sync method>|t <db-type>|n <db-name>|r <remote-credentials>]
+# Dependencies : mysql, mongo, postgres, openssh-server
+# Example      : db sync -m get -t mysql -n some_db -r deploy@server.com
+# Notes        :
+# Source       : http://stackoverflow.com/a/15198031/865268
+# Source       : http://stackoverflow.com/a/16620593/865268
+
+LOCAL_PORT=12345
+
+# Get all variables
+# ------------------------------------------------------------------------------------------------------------
+while getopts :m:t:n:r:h OPTION; do
+  case $OPTION in
+    t) echo "DB (T)ype - Mysql, Mongo, Postgres"
+       DB_TYPE=$OPTARG
+       ;;
+    m) echo "Sync (M)ethod - GET or PUT"
+       SYNC_TYPE=$OPTARG
+       ;;
+    n) echo "DB (N)ame"
+       DB_NAME=$OPTARG
+       ;;
+    r) echo "(R)emote Credentials (user@server)"
+       REMOTE_CREDENTIALS=$OPTARG
+       ;;
+    h) echo "Usage $0 \-[t <db-type>|n <db-name>|r <remote-credentials>|m <sync method>]"
+       exit 0
+       ;;
+    \?) echo "Invalid option -$OPTARG. Please run '$0 -h' for help" >&2
+        exit 1
+        ;;
+    :) echo "Option -$OPTARG requires an argument. Please run '$0 -h' for help" >&2
+       exit 1
+       ;;
+  esac
+done
+
+# TODO: Sanity checks for variables
+# -----------------------------------------------------------------------------------------------------------
+
+# Check DB type
+# -----------------------------------------------------------------------------------------------------------
+if [[ $DB_TYPE == "mysql" ]]; then
+  DB_PORT=3306
+  ssh -fqTNM -S db-sync-socket -L $LOCAL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
+  REMOTE_DB_EXISTS=`mysqlshow -uroot -h127.0.0.1 -P$LOCAL_PORT | grep -o $DB_NAME`
+  LOCAL_DB_EXISTS=`mysqlshow -uroot | grep -o $DB_NAME`
+  SYNC_COMMAND="mysqldump -uroot -h127.0.0.1 -P$LOCAL_PORT $DB_NAME | mysql -uroot -C $DB_NAME"
+
+elif [[ $DB_TYPE == "mongo" ]]; then
+  DB_PORT=27017
+  ssh -fqTNM -S db-sync-socket -L $LOCAL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
+  REMOTE_DB_EXISTS=`mongo 127.0.0.1:$LOCAL_PORT/$DB_NAME --eval 'printjson(db.getCollectionNames())' | grep -o '\[*\]' | tr -d '[]'`
+  LOCAL_DB_EXISTS=`mongo $DB_NAME --eval 'printjson(db.getCollectionNames())' | grep -o '\[*\]' | tr -d '[]'`
+  SYNC_COMMAND="mongo $DB_NAME --eval 'printjson(db.dropDatabase();db.copyDatabase('$DB_NAME','$DB_NAME','localhost:$LOCAL_PORT');)'"
+
+elif [[ $DB_TYPE == "postgres" ]]; then
+  DB_PORT=5432
+fi
+
+# Check sync type
+# ------------------------------------------------------------------------------------------------------------
+if [[ $SYNC_TYPE == "get" ]]; then
+  [[ -z REMOTE_DB_EXISTS ]] && { echo "Remote DB doesn't exist. Are you sure you typed it right?"; exit 1; }
+  [[ -z LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && { echo "Local DB doesn't exist. Creating now..."; db-mysql-create $DB_NAME; }
+
+elif [[ $SYNC_TYPE == "put" ]]; then
+  [[ -z REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Remote DB doesn't exist. Please create it manually before you continue."; exit 1;
+  [[ -z LOCAL_DB_EXISTS ]] && echo "Local DB doesn't exist. Are you sure you typed it right?"; exit 1;
+  ssh -S db-sync-socket -R $LOCAL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
+fi
+
+# Perform sync
+# ------------------------------------------------------------------------------------------------------------
+echo "Syncing remote DataBase to local environment..."
+eval $SYNC_COMMAND
+ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS
