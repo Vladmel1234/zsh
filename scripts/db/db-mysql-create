@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Description  : Safely create a UTF-8 MySQL db.
+# Usage        : db mysql-create <db-name>
+# Dependencies : mysql-client
+# Example      : db mysql-create my_db
+# Notes        :
+# Source       :
+
 if [[ $# -eq 0 ]]; then
   echo "Usage: $0 <db_name>"
   exit 1
