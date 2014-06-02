@@ -11,7 +11,7 @@
 
 function exit_script() {
   echo $1
-  ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS 2>/dev/null
+  ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS 2> /dev/null
   exit 1
 }
 
@@ -29,9 +29,9 @@ while getopts :m:t:n:r:h OPTION; do
     r) REMOTE_CREDENTIALS=$OPTARG ;;
     h) echo "Usage: db-sync [-t db-(t)ype] [-n db-(n)ame] [-r (r)emote-credentials] [-m sync-(m)ethod] [-h]"
        exit 0 ;;
-    \?) echo "Invalid option -$OPTARG. Please run 'db-sync -h' for help" 2>/dev/null
+    \?) echo "Invalid option -$OPTARG. Please run 'db-sync -h' for help" 2> /dev/null
         exit 1 ;;
-    :) echo "Option -$OPTARG requires an argument. Please run 'db-sync -h' for help" 2>/dev/null
+    :) echo "Option -$OPTARG requires an argument. Please run 'db-sync -h' for help" 2> /dev/null
        exit 1 ;;
   esac
 done
