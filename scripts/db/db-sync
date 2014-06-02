@@ -109,6 +109,6 @@ eval $SYNC_COMMAND
 
 # Shutdown SSH
 # ------------------------------------------------------------------------------------------------------------
-echo "DB synced successfully!"
 echo "Disconnecting from ssh..."
-ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS 2>/dev/null
+ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS 2> /dev/null
+echo "DB synced successfully!"
