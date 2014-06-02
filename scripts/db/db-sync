@@ -21,7 +21,7 @@ SYNC_TYPE="get" # Default Argument. All others are a must.
 
 # Get All Variables
 # ------------------------------------------------------------------------------------------------------------
-while getopts :m:t:n:r:p:h OPTION; do
+while getopts :m:t:n:r:h OPTION; do
   case $OPTION in
     t) DB_TYPE=$OPTARG ;;
     m) SYNC_TYPE=$OPTARG ;;
@@ -46,6 +46,8 @@ done
 
 # Check DB Type
 # -----------------------------------------------------------------------------------------------------------
+# TODO: Better way to find if DB exists for mongo/postgres
+# TODO: More DB's?
 if [[ $DB_TYPE == "mysql" ]]; then
   DB_PORT=3306
   DB_EXISTS="mysql -uroot -e \"SHOW DATABASES LIKE '$DB_NAME';\""
@@ -76,6 +78,7 @@ REMOTE_DB_EXISTS=`ssh -S db-sync-socket $REMOTE_CREDENTIALS "$DB_EXISTS"`
 
 # Check Sync Type
 # ------------------------------------------------------------------------------------------------------------
+# TODO: Does any other DB requires creating before syncing?
 if [[ $SYNC_TYPE == "get" ]]; then
   [[ -z $REMOTE_DB_EXISTS ]] && exit_script "ERROR: Can't reach remote DB. Are you sure you typed it correctly?"
   [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Local DB doesn't exist. Creating now..." && db-mysql-create $DB_NAME && sleep 2
