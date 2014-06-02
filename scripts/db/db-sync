@@ -29,20 +29,19 @@ done
 
 # TODO: Sanity checks for variables
 # -----------------------------------------------------------------------------------------------------------
+ssh -fqTNM -S db-sync-socket $REMOTE_CREDENTIALS
 
 # Check DB type
 # -----------------------------------------------------------------------------------------------------------
 echo "Connecting through ssh..."
 if [[ $DB_TYPE == "mysql" ]]; then
   DB_PORT=3306
-  ssh -fqTNM -S db-sync-socket -L $LOCAL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
   REMOTE_DB_EXISTS=`mysqlshow -uroot -h127.0.0.1 -p$REMOTE_PASSWORD -P$LOCAL_PORT | grep -o $DB_NAME`
   LOCAL_DB_EXISTS=`mysqlshow -uroot | grep -o $DB_NAME`
   SYNC_COMMAND="mysqldump -uroot -h127.0.0.1 -P$LOCAL_PORT $DB_NAME | mysql -uroot -C $DB_NAME"
 
 elif [[ $DB_TYPE == "mongo" ]]; then
   DB_PORT=27017
-  ssh -fqTNM -S db-sync-socket -L $LOCAL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
   REMOTE_DB_EXISTS=`mongo 127.0.0.1:$LOCAL_PORT --eval "printjson(db.adminCommand('listDatabases'))" | grep -o $DB_NAME`
   LOCAL_DB_EXISTS=`mongo --eval "printjson(db.adminCommand('listDatabases'))" | grep -o $DB_NAME`
   SYNC_COMMAND="mongo $DB_NAME --eval 'printjson(db.dropDatabase();db.copyDatabase('$DB_NAME','$DB_NAME','localhost:$LOCAL_PORT');)'"
@@ -60,12 +59,12 @@ echo "Check local and remote DB's..."
 if [[ $SYNC_TYPE == "get" ]]; then
   [[ -z $REMOTE_DB_EXISTS ]] && echo "Remote DB doesn't exist. Are you sure you typed it right?" && exit 1
   [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Local DB doesn't exist. Creating now..." && db-mysql-create $DB_NAME && sleep 2
+  ssh -fqTN -S db-sync-socket -L $LOCAL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
 
 elif [[ $SYNC_TYPE == "put" ]]; then
   [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Remote DB doesn't exist. Please create it manually before you continue." && exit 1
   [[ -z $LOCAL_DB_EXISTS ]] && echo "Local DB doesn't exist. Are you sure you typed it right?" && exit 1
-  LOCAL_PORT=12346
-  ssh -S db-sync-socket -R $LOCAL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
+  ssh -fqTN -S db-sync-socket -R $LOCAL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
 fi
 
 # Perform sync
