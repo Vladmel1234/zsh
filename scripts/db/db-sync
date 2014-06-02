@@ -4,11 +4,11 @@
 # Usage        : db sync [-t db-type] [-n db-name] [-r remote-credentials] [-m sync-method]
 # Dependencies : mysql, mongo, postgres, openssh-server
 # Example      : db sync -m get -t mysql -n some_db -p 123456 -r deploy@server.com
-# Notes        :
+# Notes        : Assumes user root, no password.
 # Source       : http://stackoverflow.com/a/15198031/865268
 # Source       : http://stackoverflow.com/a/16620593/865268
 
-LOCAL_PORT=12345
+TUNNEL_PORT=12345
 
 # Get all variables
 # ------------------------------------------------------------------------------------------------------------
@@ -29,42 +29,46 @@ done
 
 # TODO: Sanity checks for variables
 # -----------------------------------------------------------------------------------------------------------
-ssh -fqTNM -S db-sync-socket $REMOTE_CREDENTIALS
 
 # Check DB type
 # -----------------------------------------------------------------------------------------------------------
-echo "Connecting through ssh..."
 if [[ $DB_TYPE == "mysql" ]]; then
   DB_PORT=3306
-  REMOTE_DB_EXISTS=`mysqlshow -uroot -h127.0.0.1 -p$REMOTE_PASSWORD -P$LOCAL_PORT | grep -o $DB_NAME`
-  LOCAL_DB_EXISTS=`mysqlshow -uroot | grep -o $DB_NAME`
-  SYNC_COMMAND="mysqldump -uroot -h127.0.0.1 -P$LOCAL_PORT $DB_NAME | mysql -uroot -C $DB_NAME"
+  DB_EXISTS="mysqlshow -uroot | grep -o $DB_NAME"
+  SYNC_COMMAND="mysqldump -uroot -h127.0.0.1 -P$TUNNEL_PORT $DB_NAME | mysql -uroot -h127.0.0.1 -P$DB_PORT -C $DB_NAME"
 
 elif [[ $DB_TYPE == "mongo" ]]; then
   DB_PORT=27017
-  REMOTE_DB_EXISTS=`mongo 127.0.0.1:$LOCAL_PORT --eval "printjson(db.adminCommand('listDatabases'))" | grep -o $DB_NAME`
-  LOCAL_DB_EXISTS=`mongo --eval "printjson(db.adminCommand('listDatabases'))" | grep -o $DB_NAME`
-  SYNC_COMMAND="mongo $DB_NAME --eval 'printjson(db.dropDatabase();db.copyDatabase('$DB_NAME','$DB_NAME','localhost:$LOCAL_PORT');)'"
+  DB_EXISTS="mongo --eval \"printjson(db.adminCommand('listDatabases'))\" | grep -o $DB_NAME"
+  SYNC_COMMAND="mongo --host 127.0.0.1:$DB_PORT $DB_NAME --eval 'printjson(db.dropDatabase();db.copyDatabase('$DB_NAME','$DB_NAME','127.0.0.1:$TUNNEL_PORT');)'"
 
 elif [[ $DB_TYPE == "postgres" ]]; then
   DB_PORT=5432
-  REMOTE_DB_EXISTS=
-  LOCAL_DB_EXISTS=
-  SYNC_COMMAND="pg_dump -C -h127.0.0.1 -p$LOCAL_PORT -Uroot $DB_NAME | psql -Uroot $DB_NAME"
+  DB_EXISTS=""
+  SYNC_COMMAND="pg_dump -C -h127.0.0.1 -p$TUNNEL_PORT -Uroot $DB_NAME | psql -h127.0.0.1 -p$DB_PORT -Uroot $DB_NAME"
 fi
+
+# Connect to SSH and check DB's
+# ------------------------------------------------------------------------------------------------------------
+echo "Connecting through ssh..."
+ssh -fqTNM -S db-sync-socket -L $TUNNEL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
+
+echo "Check local and remote DB's..."
+LOCAL_DB_EXISTS=`eval $DB_EXISTS`
+REMOTE_DB_EXISTS=`ssh -S db-sync-socket $REMOTE_CREDENTIALS "$DB_EXISTS"`
 
 # Check sync type
 # ------------------------------------------------------------------------------------------------------------
-echo "Check local and remote DB's..."
 if [[ $SYNC_TYPE == "get" ]]; then
   [[ -z $REMOTE_DB_EXISTS ]] && echo "Remote DB doesn't exist. Are you sure you typed it right?" && exit 1
   [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Local DB doesn't exist. Creating now..." && db-mysql-create $DB_NAME && sleep 2
-  ssh -fqTN -S db-sync-socket -L $LOCAL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
 
 elif [[ $SYNC_TYPE == "put" ]]; then
+  TUNNEL_PORT=$DB_PORT
+  DB_PORT=12345
+
   [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Remote DB doesn't exist. Please create it manually before you continue." && exit 1
   [[ -z $LOCAL_DB_EXISTS ]] && echo "Local DB doesn't exist. Are you sure you typed it right?" && exit 1
-  ssh -fqTN -S db-sync-socket -R $LOCAL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
 fi
 
 # Perform sync
