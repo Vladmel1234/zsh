@@ -8,6 +8,7 @@
 # Source       : http://stackoverflow.com/a/15198031/865268
 # Source       : http://stackoverflow.com/a/16620593/865268
 
+# TODO: Random port assigning?!
 TUNNEL_PORT=12345
 
 # Get all variables
@@ -34,13 +35,13 @@ done
 # -----------------------------------------------------------------------------------------------------------
 if [[ $DB_TYPE == "mysql" ]]; then
   DB_PORT=3306
-  DB_EXISTS="mysqlshow -uroot | grep -o $DB_NAME"
+  DB_EXISTS="mysql -uroot -e \"SHOW DATABASES LIKE '$DB_NAME';\""
   SYNC_COMMAND="mysqldump -uroot -h127.0.0.1 -P$TUNNEL_PORT $DB_NAME | mysql -uroot -h127.0.0.1 -P$DB_PORT -C $DB_NAME"
 
 elif [[ $DB_TYPE == "mongo" ]]; then
   DB_PORT=27017
   DB_EXISTS="mongo --eval \"printjson(db.adminCommand('listDatabases'))\" | grep -o $DB_NAME"
-  SYNC_COMMAND="mongo --host 127.0.0.1:$DB_PORT $DB_NAME --eval 'printjson(db.dropDatabase();db.copyDatabase('$DB_NAME','$DB_NAME','127.0.0.1:$TUNNEL_PORT');)'"
+  SYNC_COMMAND="mongo --host 127.0.0.1:$DB_PORT $DB_NAME --eval \"db.dropDatabase();db.copyDatabase('$DB_NAME','$DB_NAME','127.0.0.1:$TUNNEL_PORT');\""
 
 elif [[ $DB_TYPE == "postgres" ]]; then
   DB_PORT=5432
@@ -64,6 +65,7 @@ if [[ $SYNC_TYPE == "get" ]]; then
   [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Local DB doesn't exist. Creating now..." && db-mysql-create $DB_NAME && sleep 2
 
 elif [[ $SYNC_TYPE == "put" ]]; then
+  # Reverting the ports for a reverse sync. Yay easy method!:D
   TUNNEL_PORT=$DB_PORT
   DB_PORT=12345
 
