@@ -2,9 +2,9 @@
 
 # Description  : Sync DB script for MySQL, Mongo, Postgres.
 # Usage        : db sync [-t db-(t)ype] [-n db-(n)ame] [-r (r)emote-credentials] [-m sync-(m)ethod] [-h]
-# Dependencies : mysql, mongo, postgres, openssh-server
+# Dependencies : mysql, mongo, postgres, openssh-server, nmap
 # Example      : db sync -m get -t mysql -n some_db -p 123456 -r deploy@server.com
-# Notes        : Assumes user root, no password.
+# Notes        : Assumes user root, no password, ssh-key available upstream.
 # Sources      : http://stackoverflow.com/a/15198031/865268
 #                http://stackoverflow.com/a/16620593/865268
 #                http://stackoverflow.com/a/1238305/865268
@@ -39,10 +39,15 @@ done
 # Sanity checks
 # ------------------------------------------------------------------------------------------------------------
 echo "Validating all variables have value..."
-scriptVars="DB_TYPE SYNC_TYPE DB_NAME REMOTE_CREDENTIALS"
-for scriptVar in $scriptVars; do
-    [[ -z ${!scriptVar} ]] && exit_script "ERROR: Variable $scriptVar must have a value."
+SCRIPT_VARS="DB_TYPE SYNC_TYPE DB_NAME REMOTE_CREDENTIALS"
+for SCRIPT_VAR in $SCRIPT_VARS; do
+    [[ -z ${!SCRIPT_VAR} ]] && exit_script "ERROR: Variable $SCRIPT_VAR must have a value."
 done
+
+echo "Checking remote server is reachable..."
+# An easy way to check connectivity without using logins or keys or passwords.
+REMOTE_EXISTS=`nmap $REMOTE_CREDENTIALS -PN -p ssh | grep -o 'open'`
+[[ -z $REMOTE_EXISTS ]] && exit_script "ERROR: Provided remote server is not rechable."
 
 # Check DB Type
 # -----------------------------------------------------------------------------------------------------------
