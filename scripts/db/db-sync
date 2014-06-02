@@ -41,7 +41,7 @@ done
 echo "Validating all variables have value..."
 SCRIPT_VARS="DB_TYPE SYNC_TYPE DB_NAME REMOTE_CREDENTIALS"
 for SCRIPT_VAR in $SCRIPT_VARS; do
-    [[ -z ${!SCRIPT_VAR} ]] && exit_script "ERROR: Variable $SCRIPT_VAR must have a value."
+  [[ -z ${!SCRIPT_VAR} ]] && exit_script "ERROR: Variable $SCRIPT_VAR must have a value."
 done
 
 echo "Checking remote server is reachable..."
@@ -105,13 +105,10 @@ fi
 # ------------------------------------------------------------------------------------------------------------
 echo "Syncing remote DataBase to local environment..."
 eval $SYNC_COMMAND
-if [ $? != 0 ]; then
-  exit_script "ERROR: DB sync failed. Please check back to see the error."
-else
-  echo "DB synced successfully!"
-fi
+[ $? != 0 ] && exit_script "ERROR: DB sync failed. Please check back to see the error."
 
 # Shutdown SSH
 # ------------------------------------------------------------------------------------------------------------
+echo "DB synced successfully!"
 echo "Disconnecting from ssh..."
 ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS 2>/dev/null
