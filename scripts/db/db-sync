@@ -11,7 +11,7 @@
 
 function exit_script() {
   echo $1
-  ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS >&2
+  ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS 2>/dev/null
   exit 1
 }
 
@@ -29,14 +29,20 @@ while getopts :m:t:n:r:p:h OPTION; do
     r) REMOTE_CREDENTIALS=$OPTARG ;;
     h) echo "Usage: db-sync [-t db-(t)ype] [-n db-(n)ame] [-r (r)emote-credentials] [-m sync-(m)ethod] [-h]"
        exit 0 ;;
-    \?) echo "Invalid option -$OPTARG. Please run 'db-sync -h' for help" >&2
+    \?) echo "Invalid option -$OPTARG. Please run 'db-sync -h' for help" 2>/dev/null
         exit 1 ;;
-    :) echo "Option -$OPTARG requires an argument. Please run 'db-sync -h' for help" >&2
+    :) echo "Option -$OPTARG requires an argument. Please run 'db-sync -h' for help" 2>/dev/null
        exit 1 ;;
   esac
 done
 
-# TODO: Sanity Checks For Variables
+# Sanity checks
+# ------------------------------------------------------------------------------------------------------------
+echo "Validating all variables have value..."
+scriptVars="DB_TYPE SYNC_TYPE DB_NAME REMOTE_CREDENTIALS"
+for scriptVar in $scriptVars; do
+    [[ -z ${!scriptVar} ]] && exit_script "ERROR: Variable $scriptVar must have a value."
+done
 
 # Check DB Type
 # -----------------------------------------------------------------------------------------------------------
@@ -56,7 +62,7 @@ elif [[ $DB_TYPE == "postgres" ]]; then
   SYNC_COMMAND="pg_dump -C -h127.0.0.1 -p$TUNNEL_PORT -Uroot $DB_NAME | psql -h127.0.0.1 -p$DB_PORT -Uroot $DB_NAME"
 
 else
-  exit_script "Failed to recognize DB type. Please trace back for errors."
+  exit_script "ERROR: Failed to recognize DB type. Please trace back for errors."
 fi
 
 # Connect To SSH With Master Control And Check DB's
@@ -71,7 +77,7 @@ REMOTE_DB_EXISTS=`ssh -S db-sync-socket $REMOTE_CREDENTIALS "$DB_EXISTS"`
 # Check Sync Type
 # ------------------------------------------------------------------------------------------------------------
 if [[ $SYNC_TYPE == "get" ]]; then
-  [[ -z $REMOTE_DB_EXISTS ]] && exit_script "Can't reach remote DB. Are you sure you typed it correctly?"
+  [[ -z $REMOTE_DB_EXISTS ]] && exit_script "ERROR: Can't reach remote DB. Are you sure you typed it correctly?"
   [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Local DB doesn't exist. Creating now..." && db-mysql-create $DB_NAME && sleep 2
 
 elif [[ $SYNC_TYPE == "put" ]]; then
@@ -80,8 +86,8 @@ elif [[ $SYNC_TYPE == "put" ]]; then
   DB_PORT=12345
 
   # TODO: Send `db-mysql-create` through ssh?
-  [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && exit_script "Remote DB doesn't exist. Please create it manually before you continue."
-  [[ -z $LOCAL_DB_EXISTS ]] && exit_script "Can't reach local DB. Are you sure you typed it correctly?"
+  [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && exit_script "ERROR: Remote DB doesn't exist. Please create it manually before you continue."
+  [[ -z $LOCAL_DB_EXISTS ]] && exit_script "ERROR: Can't reach local DB. Are you sure you typed it correctly?"
 fi
 
 # Perform Sync
@@ -89,7 +95,7 @@ fi
 echo "Syncing remote DataBase to local environment..."
 eval $SYNC_COMMAND
 if [ $? != 0 ]; then
-  exit_script "DB sync failed. Please check back to see the error."
+  exit_script "ERROR: DB sync failed. Please check back to see the error."
 else
   echo "DB synced successfully!"
 fi
@@ -97,4 +103,4 @@ fi
 # Shutdown SSH
 # ------------------------------------------------------------------------------------------------------------
 echo "Disconnecting from ssh..."
-ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS >&2
+ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS 2>/dev/null
