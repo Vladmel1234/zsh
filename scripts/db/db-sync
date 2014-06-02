@@ -105,10 +105,9 @@ fi
 # ------------------------------------------------------------------------------------------------------------
 echo "Syncing remote DataBase to local environment..."
 eval $SYNC_COMMAND
-[ $? != 0 ] && exit_script "ERROR: DB sync failed. Please check back to see the error."
+[[ $? != 0 ]] && exit_script "ERROR: DB sync failed. Please check back to see the error."
 
 # Shutdown SSH
 # ------------------------------------------------------------------------------------------------------------
 echo "Disconnecting from ssh..."
 ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS 2> /dev/null
-echo "DB synced successfully!"
