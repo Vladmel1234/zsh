@@ -15,7 +15,7 @@ function exit_script() {
   exit 1
 }
 
-# TODO: Random Port Assigning?!
+# TODO: Random Port Assigning?
 TUNNEL_PORT=12345
 SYNC_TYPE="get" # Default Argument. All others are a must.
 
@@ -52,7 +52,7 @@ REMOTE_EXISTS=`nmap $REMOTE_CREDENTIALS -PN -p ssh | grep -o 'open'`
 # Check DB Type
 # -----------------------------------------------------------------------------------------------------------
 # TODO: Better way to find if DB exists for mongo/postgres
-# TODO: More DB's?
+# TODO: More DB's? MariaDB? Redis? w00t?
 if [[ $DB_TYPE == "mysql" ]]; then
   DB_PORT=3306
   DB_EXISTS="mysql -uroot -e \"SHOW DATABASES LIKE '$DB_NAME';\""
