@@ -1,17 +1,25 @@
 #!/usr/bin/env bash
 
 # Description  : Sync DB script for MySQL, Mongo, Postgres.
-# Usage        : db sync [-t db-type] [-n db-name] [-r remote-credentials] [-m sync-method]
+# Usage        : db sync [-t db-(t)ype] [-n db-(n)ame] [-r (r)emote-credentials] [-m sync-(m)ethod] [-h]
 # Dependencies : mysql, mongo, postgres, openssh-server
 # Example      : db sync -m get -t mysql -n some_db -p 123456 -r deploy@server.com
 # Notes        : Assumes user root, no password.
-# Source       : http://stackoverflow.com/a/15198031/865268
-# Source       : http://stackoverflow.com/a/16620593/865268
+# Sources      : http://stackoverflow.com/a/15198031/865268
+#                http://stackoverflow.com/a/16620593/865268
+#                http://stackoverflow.com/a/1238305/865268
 
-# TODO: Random port assigning?!
+function exit_script($MESSAGE) {
+  echo $MESSAGE
+  ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS >&2
+  exit 1
+}
+
+# TODO: Random Port Assigning?!
 TUNNEL_PORT=12345
+SYNC_TYPE="get" # Default Argument. All others are a must.
 
-# Get all variables
+# Get All Variables
 # ------------------------------------------------------------------------------------------------------------
 while getopts :m:t:n:r:p:h OPTION; do
   case $OPTION in
@@ -19,7 +27,7 @@ while getopts :m:t:n:r:p:h OPTION; do
     m) SYNC_TYPE=$OPTARG ;;
     n) DB_NAME=$OPTARG ;;
     r) REMOTE_CREDENTIALS=$OPTARG ;;
-    h) echo "Usage: db-sync [-t db-type] [-n db-name] [-r remote-credentials] [-m sync-method]"
+    h) echo "Usage: db-sync [-t db-(t)ype] [-n db-(n)ame] [-r (r)emote-credentials] [-m sync-(m)ethod] [-h]"
        exit 0 ;;
     \?) echo "Invalid option -$OPTARG. Please run 'db-sync -h' for help" >&2
         exit 1 ;;
@@ -28,10 +36,9 @@ while getopts :m:t:n:r:p:h OPTION; do
   esac
 done
 
-# TODO: Sanity checks for variables
-# -----------------------------------------------------------------------------------------------------------
+# TODO: Sanity Checks For Variables
 
-# Check DB type
+# Check DB Type
 # -----------------------------------------------------------------------------------------------------------
 if [[ $DB_TYPE == "mysql" ]]; then
   DB_PORT=3306
@@ -47,9 +54,12 @@ elif [[ $DB_TYPE == "postgres" ]]; then
   DB_PORT=5432
   DB_EXISTS=""
   SYNC_COMMAND="pg_dump -C -h127.0.0.1 -p$TUNNEL_PORT -Uroot $DB_NAME | psql -h127.0.0.1 -p$DB_PORT -Uroot $DB_NAME"
+
+else
+  exit_script("Failed to recognize DB type. Please trace back for errors.")
 fi
 
-# Connect to SSH and check DB's
+# Connect To SSH With Master Control And Check DB's
 # ------------------------------------------------------------------------------------------------------------
 echo "Connecting through ssh..."
 ssh -fqTNM -S db-sync-socket -L $TUNNEL_PORT:127.0.0.1:$DB_PORT $REMOTE_CREDENTIALS
@@ -58,25 +68,33 @@ echo "Check local and remote DB's..."
 LOCAL_DB_EXISTS=`eval $DB_EXISTS`
 REMOTE_DB_EXISTS=`ssh -S db-sync-socket $REMOTE_CREDENTIALS "$DB_EXISTS"`
 
-# Check sync type
+# Check Sync Type
 # ------------------------------------------------------------------------------------------------------------
 if [[ $SYNC_TYPE == "get" ]]; then
-  [[ -z $REMOTE_DB_EXISTS ]] && echo "Remote DB doesn't exist. Are you sure you typed it right?" && exit 1
+  [[ -z $REMOTE_DB_EXISTS ]] && exit_script("Remote DB doesn't exist. Are you sure you typed it right?")
   [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Local DB doesn't exist. Creating now..." && db-mysql-create $DB_NAME && sleep 2
 
 elif [[ $SYNC_TYPE == "put" ]]; then
-  # Reverting the ports for a reverse sync. Yay easy method!:D
+  # Reverting the ports for a reverse sync. Yay clever method!:D
   TUNNEL_PORT=$DB_PORT
   DB_PORT=12345
 
-  [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Remote DB doesn't exist. Please create it manually before you continue." && exit 1
-  [[ -z $LOCAL_DB_EXISTS ]] && echo "Local DB doesn't exist. Are you sure you typed it right?" && exit 1
+  # TODO: Send `db-mysql-create` through ssh?
+  [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && exit_script("Remote DB doesn't exist. Please create it manually before you continue.")
+  [[ -z $LOCAL_DB_EXISTS ]] && exit_script("Local DB doesn't exist. Are you sure you typed it right?")
 fi
 
-# Perform sync
+# Perform Sync
 # ------------------------------------------------------------------------------------------------------------
 echo "Syncing remote DataBase to local environment..."
 eval $SYNC_COMMAND
+if [ $? != 0 ]; then
+  exit_script("DB sync failed. Please check back to see the error.")
+else
+  echo "DB synced successfully!"
+fi
+
+# Shutdown SSH
+# ------------------------------------------------------------------------------------------------------------
 echo "Disconnecting from ssh..."
 ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS >&2
-echo "DB Synced!"
