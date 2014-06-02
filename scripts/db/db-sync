@@ -47,7 +47,7 @@ done
 echo "Checking remote server is reachable..."
 # An easy way to check connectivity without using logins or keys or passwords.
 REMOTE_EXISTS=`nmap $REMOTE_CREDENTIALS -PN -p ssh | grep -o 'open'`
-[[ -z $REMOTE_EXISTS ]] && exit_script "ERROR: Provided remote server is not rechable."
+[[ -z $REMOTE_EXISTS ]] && exit_script "ERROR: Provided remote server is not reachable."
 
 # Check DB Type
 # -----------------------------------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ elif [[ $DB_TYPE == "postgres" ]]; then
   SYNC_COMMAND="pg_dump -C -h127.0.0.1 -p$TUNNEL_PORT -Uroot $DB_NAME | psql -h127.0.0.1 -p$DB_PORT -Uroot $DB_NAME"
 
 else
-  exit_script "ERROR: Failed to recognize DB type. Please trace back for errors."
+  exit_script "ERROR: Failed to recognize DB type."
 fi
 
 # Connect To SSH With Master Control And Check DB's
@@ -86,7 +86,7 @@ REMOTE_DB_EXISTS=`ssh -S db-sync-socket $REMOTE_CREDENTIALS "$DB_EXISTS"`
 # TODO: Does any other DB requires creating before syncing?
 if [[ $SYNC_TYPE == "get" ]]; then
   [[ -z $REMOTE_DB_EXISTS ]] && exit_script "ERROR: Can't reach remote DB. Are you sure you typed it correctly?"
-  [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Local DB doesn't exist. Creating now..." && db-mysql-create $DB_NAME && sleep 2
+  [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Can't reach local DB. Creating now..." && db-mysql-create $DB_NAME && sleep 2
 
 elif [[ $SYNC_TYPE == "put" ]]; then
   # Reverting the ports for a reverse sync. Yay clever method!:D
@@ -94,18 +94,18 @@ elif [[ $SYNC_TYPE == "put" ]]; then
   DB_PORT=12345
 
   # TODO: Send `db-mysql-create` through ssh?
-  [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && exit_script "ERROR: Remote DB doesn't exist. Please create it manually before you continue."
+  [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && exit_script "ERROR: Can't reach remote DB. Please create it manually before you continue."
   [[ -z $LOCAL_DB_EXISTS ]] && exit_script "ERROR: Can't reach local DB. Are you sure you typed it correctly?"
 
 else
-  exit_script "ERROR: Failed to recognize sync type. Please trace back for errors."
+  exit_script "ERROR: Failed to recognize sync type."
 fi
 
 # Perform Sync
 # ------------------------------------------------------------------------------------------------------------
 echo "Syncing remote DataBase to local environment..."
 eval $SYNC_COMMAND
-[[ $? != 0 ]] && exit_script "ERROR: DB sync failed. Please check back to see the error."
+[[ $? != 0 ]] && exit_script "ERROR: DB sync failed."
 
 # Shutdown SSH
 # ------------------------------------------------------------------------------------------------------------
