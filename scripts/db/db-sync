@@ -91,6 +91,9 @@ elif [[ $SYNC_TYPE == "put" ]]; then
   # TODO: Send `db-mysql-create` through ssh?
   [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && exit_script "ERROR: Remote DB doesn't exist. Please create it manually before you continue."
   [[ -z $LOCAL_DB_EXISTS ]] && exit_script "ERROR: Can't reach local DB. Are you sure you typed it correctly?"
+
+else
+  exit_script "ERROR: Failed to recognize sync type. Please trace back for errors."
 fi
 
 # Perform Sync
