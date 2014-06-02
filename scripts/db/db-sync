@@ -86,15 +86,18 @@ REMOTE_DB_EXISTS=`ssh -S db-sync-socket $REMOTE_CREDENTIALS "$DB_EXISTS"`
 # TODO: Does any other DB requires creating before syncing?
 if [[ $SYNC_TYPE == "get" ]]; then
   [[ -z $REMOTE_DB_EXISTS ]] && exit_script "ERROR: Can't reach remote DB. Are you sure you typed it correctly?"
-  [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Can't reach local DB. Creating now..." && db-mysql-create $DB_NAME && sleep 2
+  [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] &&
+    echo "Can't reach local DB. Creating now..." &&
+    db-mysql-create $DB_NAME
 
 elif [[ $SYNC_TYPE == "put" ]]; then
   # Reverting the ports for a reverse sync. Yay clever method!:D
   TUNNEL_PORT=$DB_PORT
   DB_PORT=12345
 
-  # TODO: Send `db-mysql-create` through ssh?
-  [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && exit_script "ERROR: Can't reach remote DB. Please create it manually before you continue."
+  [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] &&
+    echo "Can't reach remote DB. Creating now..." &&
+    ssh -S db-sync-socket $REMOTE_CREDENTIALS 'bash -s' < db-mysql-create $DB_NAME
   [[ -z $LOCAL_DB_EXISTS ]] && exit_script "ERROR: Can't reach local DB. Are you sure you typed it correctly?"
 
 else

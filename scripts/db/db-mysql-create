@@ -23,5 +23,6 @@ while [[ RET -ne 0 ]]; do
 done
 
 mysqladmin -uroot shutdown
+sleep 2
 
 echo "=> Done!"
