@@ -9,8 +9,8 @@
 #                http://stackoverflow.com/a/16620593/865268
 #                http://stackoverflow.com/a/1238305/865268
 
-function exit_script($MESSAGE) {
-  echo $MESSAGE
+function exit_script() {
+  echo $1
   ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS >&2
   exit 1
 }
@@ -56,7 +56,7 @@ elif [[ $DB_TYPE == "postgres" ]]; then
   SYNC_COMMAND="pg_dump -C -h127.0.0.1 -p$TUNNEL_PORT -Uroot $DB_NAME | psql -h127.0.0.1 -p$DB_PORT -Uroot $DB_NAME"
 
 else
-  exit_script("Failed to recognize DB type. Please trace back for errors.")
+  exit_script "Failed to recognize DB type. Please trace back for errors."
 fi
 
 # Connect To SSH With Master Control And Check DB's
@@ -71,7 +71,7 @@ REMOTE_DB_EXISTS=`ssh -S db-sync-socket $REMOTE_CREDENTIALS "$DB_EXISTS"`
 # Check Sync Type
 # ------------------------------------------------------------------------------------------------------------
 if [[ $SYNC_TYPE == "get" ]]; then
-  [[ -z $REMOTE_DB_EXISTS ]] && exit_script("Remote DB doesn't exist. Are you sure you typed it right?")
+  [[ -z $REMOTE_DB_EXISTS ]] && exit_script "Can't reach remote DB. Are you sure you typed it correctly?"
   [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] && echo "Local DB doesn't exist. Creating now..." && db-mysql-create $DB_NAME && sleep 2
 
 elif [[ $SYNC_TYPE == "put" ]]; then
@@ -80,8 +80,8 @@ elif [[ $SYNC_TYPE == "put" ]]; then
   DB_PORT=12345
 
   # TODO: Send `db-mysql-create` through ssh?
-  [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && exit_script("Remote DB doesn't exist. Please create it manually before you continue.")
-  [[ -z $LOCAL_DB_EXISTS ]] && exit_script("Local DB doesn't exist. Are you sure you typed it right?")
+  [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] && exit_script "Remote DB doesn't exist. Please create it manually before you continue."
+  [[ -z $LOCAL_DB_EXISTS ]] && exit_script "Can't reach local DB. Are you sure you typed it correctly?"
 fi
 
 # Perform Sync
@@ -89,7 +89,7 @@ fi
 echo "Syncing remote DataBase to local environment..."
 eval $SYNC_COMMAND
 if [ $? != 0 ]; then
-  exit_script("DB sync failed. Please check back to see the error.")
+  exit_script "DB sync failed. Please check back to see the error."
 else
   echo "DB synced successfully!"
 fi
