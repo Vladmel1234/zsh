@@ -103,7 +103,7 @@ fi
 
 # Perform Sync
 # ------------------------------------------------------------------------------------------------------------
-echo "Syncing remote DataBase to local environment..."
+echo "Syncing DB's..."
 eval $SYNC_COMMAND
 [[ $? != 0 ]] && exit_script "ERROR: DB sync failed."
 
