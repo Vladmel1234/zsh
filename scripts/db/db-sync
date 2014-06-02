@@ -41,13 +41,15 @@ done
 echo "Validating all variables have value..."
 SCRIPT_VARS="DB_TYPE SYNC_TYPE DB_NAME REMOTE_CREDENTIALS"
 for SCRIPT_VAR in $SCRIPT_VARS; do
-  [[ -z ${!SCRIPT_VAR} ]] && exit_script "ERROR: Variable $SCRIPT_VAR must have a value."
+  [[ -z ${!SCRIPT_VAR} ]] &&
+    exit_script "ERROR: Variable $SCRIPT_VAR must have a value."
 done
 
 echo "Checking remote server is reachable..."
 # An easy way to check connectivity without using logins or keys or passwords.
 REMOTE_EXISTS=`nmap $REMOTE_CREDENTIALS -PN -p ssh | grep -o 'open'`
-[[ -z $REMOTE_EXISTS ]] && exit_script "ERROR: Provided remote server is not reachable."
+[[ -z $REMOTE_EXISTS ]] &&
+  exit_script "ERROR: Provided remote server is not reachable."
 
 # Check DB Type
 # -----------------------------------------------------------------------------------------------------------
@@ -85,7 +87,8 @@ REMOTE_DB_EXISTS=`ssh -S db-sync-socket $REMOTE_CREDENTIALS "$DB_EXISTS"`
 # ------------------------------------------------------------------------------------------------------------
 # TODO: Does any other DB requires creating before syncing?
 if [[ $SYNC_TYPE == "get" ]]; then
-  [[ -z $REMOTE_DB_EXISTS ]] && exit_script "ERROR: Can't reach remote DB. Are you sure you typed it correctly?"
+  [[ -z $REMOTE_DB_EXISTS ]] &&
+    exit_script "ERROR: Can't reach remote DB. Are you sure you typed it correctly?"
   [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] &&
     echo "Can't reach local DB. Creating now..." &&
     db-mysql-create $DB_NAME
@@ -98,7 +101,8 @@ elif [[ $SYNC_TYPE == "put" ]]; then
   [[ -z $REMOTE_DB_EXISTS && $DB_TYPE == "mysql" ]] &&
     echo "Can't reach remote DB. Creating now..." &&
     ssh -S db-sync-socket $REMOTE_CREDENTIALS 'bash -s' < db-mysql-create $DB_NAME
-  [[ -z $LOCAL_DB_EXISTS ]] && exit_script "ERROR: Can't reach local DB. Are you sure you typed it correctly?"
+  [[ -z $LOCAL_DB_EXISTS ]] &&
+    exit_script "ERROR: Can't reach local DB. Are you sure you typed it correctly?"
 
 else
   exit_script "ERROR: Failed to recognize sync type."
@@ -108,7 +112,8 @@ fi
 # ------------------------------------------------------------------------------------------------------------
 echo "Syncing DB's..."
 eval $SYNC_COMMAND
-[[ $? != 0 ]] && exit_script "ERROR: DB sync failed."
+[[ $? != 0 ]] &&
+  exit_script "ERROR: DB sync failed."
 
 # Shutdown SSH
 # ------------------------------------------------------------------------------------------------------------
