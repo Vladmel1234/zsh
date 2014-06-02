@@ -52,7 +52,7 @@ elif [[ $DB_TYPE == "mongo" ]]; then
 
 elif [[ $DB_TYPE == "postgres" ]]; then
   DB_PORT=5432
-  DB_EXISTS=""
+  DB_EXISTS="psql -l | grep -o $DB_NAME"
   SYNC_COMMAND="pg_dump -C -h127.0.0.1 -p$TUNNEL_PORT -Uroot $DB_NAME | psql -h127.0.0.1 -p$DB_PORT -Uroot $DB_NAME"
 
 else
