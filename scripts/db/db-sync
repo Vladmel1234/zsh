@@ -3,7 +3,7 @@
 # Description  : Sync DB script for MySQL, Mongo, Postgres.
 # Usage        : db sync [-t db-(t)ype] [-n db-(n)ame] [-r (r)emote-credentials] [-m sync-(m)ethod] [-h]
 # Dependencies : mysql, mongo, postgres, openssh-server, nmap
-# Example      : db sync -m get -t mysql -n some_db -p 123456 -r deploy@server.com
+# Example      : db sync -m get -t mysql -n some_db -r deploy@server.com
 # Notes        : ASSUMES: Always user root, no password for DB access, ssh-key is available at remote host.
 # Sources      : http://stackoverflow.com/a/15198031/865268
 #                http://stackoverflow.com/a/16620593/865268
@@ -56,6 +56,7 @@ REMOTE_EXISTS=`nmap $REMOTE_CREDENTIALS -PN -p ssh | grep -o 'open'`
 # -----------------------------------------------------------------------------------------------------------
 # TODO: Better way to find if DB exists for mongo/postgres
 # TODO: More DB's? MariaDB? Redis? w00t?
+# TODO: Run on more than one possible DB port?
 if [[ $DB_TYPE == "mysql" ]]; then
   DB_PORT=3306
   DB_EXISTS="mysql -uroot -e \"SHOW DATABASES LIKE '$DB_NAME';\""

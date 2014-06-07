@@ -22,12 +22,11 @@ plugins=(
   history-substring-search          ## Write a string and use up/down-arrows to search it through history.
   iwhois                            ## Provide a whois command with a more accurate and up to date list of whois.
   knife                             ## Autocomplete for knife command.
-  # repo                            ## Automatic completion for the repo command line tool. Requires Repo.
   # rsync                           ## Rsync aliases.
-  ssh-agent                         ## SSH agent forwarding support.
+  # ssh-agent                       ## SSH agent forwarding support.
   sublime                           ## Sublime Text 2 Aliases.
   systemadmin                       ## System administrator utils.
-  tmuxinator                        ## Tmuxinator autocomplete.
+  # tmuxinator                      ## Tmuxinator autocomplete.
   # torrent                         ## Get a torrent using a magnet link.
   vagrant                           ## Vagrat autocomplete.
   web-search                        ## Search a string in one of the search-engines.
