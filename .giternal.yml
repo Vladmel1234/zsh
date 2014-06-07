@@ -1,3 +1,6 @@
+bd:
+  repo: https://github.com/Tarrasch/zsh-bd
+  path: lib
 completions:
   repo: https://github.com/zsh-users/zsh-completions
   path: lib

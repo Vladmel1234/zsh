@@ -1,16 +1,14 @@
 #!/bin/zsh
 
 # Cdargs magic
-function cv() {
+function cv () {
   cdargs $(cat "$HOME/.cdargs" | awk '{print $1}' | fzf) &&
   cd "`cat "$HOME/.cdargsresult"`" &&
   clear
 }
-zle -N hd
-bindkey '^[q' hd
 
 # Show bundles to install
-function install() {
+function install () {
   sudo apt-get install \
   "$(dpkg -l |
   awk '{print $2}' |
@@ -18,14 +16,14 @@ function install() {
 }
 
 # Show bundles to remove
-function remove() {
+function remove () {
   sudo apt-get --purge remove \
   "$(dpkg -l |
   awk '{print $2}' |
   fzf)"
   }
 
-# present all projects in tmuxinator
+# Present all projects in tmuxinator
 function mux () {
   tmuxinator start \
   "$(find $HOME/.tmuxinator/ -maxdepth 1 -name \*.yml |
@@ -35,7 +33,14 @@ function mux () {
   clear
 }
 
-mkcd () {
+# Cd back in current directory
+function dd () {
+  bd \
+  $(echo $PWD | tr '/' "\n" | fzf) &&
+  clear
+}
+
+function mkcd () {
   if [ ! -d $1 ]; then
       mkdir -p $1;
       cd $1;
@@ -44,26 +49,25 @@ mkcd () {
   fi
 }
 
-decrypt-pdf () {
+function decrypt-pdf () {
   pdftops -upw $1 $2
   ps2pdf $1
 }
 
 # fd - cd to selected directory
-fd() {
+function fd () {
   local dir
-  dir=$(find ${1:-*} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
+  dir=$(find ${1:-*} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf +m) &&
   cd "$dir"
 }
 
 # fkill - kill process
-fkill() {
+function fkill () {
   ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -${1:-9}
 }
 
 # fbr - checkout git branch
-fbr() {
+function fbr () {
   local branches branch
   branches=$(git branch) &&
   branch=$(echo "$branches" | fzf +s +m) &&
@@ -71,7 +75,7 @@ fbr() {
 }
 
 # fco - checkout git commit
-fco() {
+function fco () {
   local commits commit
   commits=$(git log --pretty=oneline --abbrev-commit --reverse) &&
   commit=$(echo "$commits" | fzf +s +m -e) &&
@@ -79,6 +83,6 @@ fco() {
 }
 
 # fh - repeat history
-fh() {
+function fh () {
   eval $(([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s | sed 's/ *[0-9]* *//')
 }

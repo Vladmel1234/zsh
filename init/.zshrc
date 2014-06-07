@@ -44,8 +44,8 @@ source $HOME/.zsh/lib/syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/lib/clipboard/zsh-clipboard.zsh
 source $HOME/.zsh/lib/prompt/prompt-setup-old
 source $HOME/.zsh/lib/zaw/zaw.zsh
+source $HOME/.zsh/lib/bd/bd.zsh
 #source $HOME/.zsh/lib/liquidprompt/liquidprompt
-#source $HOME/.zsh/lib/bd/bd.zsh
 
 # Tmux powerline
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
