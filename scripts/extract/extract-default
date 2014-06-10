@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Description  : Extract a compressed file from a path.
+# Usage        : extract <File>
+# Dependencies : bsdtar, tar, p7zip
+# Example      : extract "wordpress.zip"
+# Notes        :
+# Source       : oh-my-zsh
+
+if [[ $# == 0 ]]; then
+  echo "Usage: extract [File ...]"
+fi
+
+while (( $# > 0 )); do
+  if [[ ! -f "$1" ]]; then
+    echo "extract: '$1' is not a valid file" 1>&2
+    shift
+    continue
+  fi
+
+  SUCCESS=0
+  FILE_NAME="$( basename "$1" )"
+  EXTRACT_DIR="$( echo "$FILE_NAME" | sed "s/\.${1##*.}//g" )"
+  case "$1" in
+    (*.tar.gz|*.tgz) tar -xvzf- -C "$EXTRACT_DEST" ;;
+    (*.tar.bz2|*.tbz|*.tbz2) tar -xvjf- -C "$EXTRACT_DEST" ;;
+    (*.zip|*.rar|*.tar) bsdtar -xvf- -C "$EXTRACT_DEST" ;;
+    (*.gz) 7za -si -tgzip x -o$EXTRACT_DEST ;;
+    (*.bz2) 7za -si -tbzip2 x -o$EXTRACT_DEST ;;
+    (*.7z) 7za -si x -o"$EXTRACT_DEST" ;;
+    (*) echo "extract: '$1' cannot be extracted" 1>&2 && SUCCESS=1 ;;
+  esac
+
+  (( SUCCESS = $SUCCESS > 0 ? $SUCCESS : $? ))
+  (( $SUCCESS == 0 )) && rm "$1"
+  shift
+done

@@ -14,11 +14,13 @@ set -e
 COMMAND=`basename $0`
 SUBCOMMAND="$1"
 SUBCOMMAND_PATH="$(command -v "$COMMAND-$SUBCOMMAND" || true)"
+SUBCOMMAND_DEFAULT="$(command -v "$COMMAND-default" || true)"
 
 if [[ -x "$SUBCOMMAND_PATH" ]]; then
   shift
   exec "$SUBCOMMAND_PATH" "${@}"
+elif [[ -x "$SUBCOMMAND_DEFAULT" ]]; then
+  exec "$SUBCOMMAND_DEFAULT" "${@}" 2>/dev/null
 else
-  exec ./default "${@}" 2>/dev/null ||
   eval $COMMAND "${@}"
 fi
