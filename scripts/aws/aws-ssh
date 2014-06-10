@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Proxy an ssh connection to a aws instance by name.
 # Usage        : ssh <instance-name>.aws <port>

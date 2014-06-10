@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Easy docker ssh using netcat.
 # Usage        : docker ssh root@<container-name>.docker

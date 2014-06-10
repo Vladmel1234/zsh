@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Prints the IP address of the last used docker container.
 # Usage        : docker last-ip

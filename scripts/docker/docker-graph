@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Graph the dependencies among your images.
 # Usage        : docker graph

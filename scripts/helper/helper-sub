@@ -10,6 +10,8 @@
 
 # TODO: Add completions
 
+set -e
+
 function exit_script() {
   echo $1
   exit 1

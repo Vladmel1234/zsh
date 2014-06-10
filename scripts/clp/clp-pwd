@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Copy current directory to clipboard
 # Usage        : clp pwd

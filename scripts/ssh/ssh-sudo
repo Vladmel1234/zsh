@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Ssh and execute a command using sudo.
 # Usage        : ssh <server> <command>

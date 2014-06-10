@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Proxy an ssh connection to a tunnel via <instance-name>.tunnel
 # Usage        : ssh <instance-name>.tunnel <port>

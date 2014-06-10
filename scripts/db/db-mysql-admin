@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Safely create admin user with all privileges.
 # Usage        : db mysql-admin

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Copy SSH Public Key to clipboard
 # Usage        : clp ssh

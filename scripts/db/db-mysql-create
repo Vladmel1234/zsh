@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Safely create a UTF-8 MySQL db.
 # Usage        : db mysql-create <db-name>

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Better docker attach using nsenter.
 # Usage        : docker attach <container-name>

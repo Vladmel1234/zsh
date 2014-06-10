@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Recursively change permissions of all the directories in a directory to "fresh" start.
 # Usage        : chmod init-folders

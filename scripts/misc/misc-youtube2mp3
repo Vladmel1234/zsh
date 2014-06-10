@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Download a YouTube video and extract the music file from it.
 # Usage        :
