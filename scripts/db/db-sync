@@ -5,9 +5,10 @@
 # Dependencies : mysql, mongo, postgres, openssh-server, nmap
 # Example      : db sync -m get -t mysql -n some_db -r deploy@server.com
 # Notes        : ASSUMES: Always user root, no password for DB access, ssh-key is available at remote host.
-# Sources      : http://stackoverflow.com/a/15198031/865268
-#                http://stackoverflow.com/a/16620593/865268
-#                http://stackoverflow.com/a/1238305/865268
+# Source       : http://stackoverflow.com/a/15198031/865268 - Setup Temporary SSH
+# Source       : http://stackoverflow.com/a/16620593/865268 - Copy Mongo
+# Source       : http://stackoverflow.com/a/1238305/865268  - Copy Postgres
+# Source       : http://stackoverflow.com/a/16348366/865268 - Progress bar
 
 function exit_script() {
   echo $1
@@ -15,8 +16,6 @@ function exit_script() {
   exit 1
 }
 
-# TODO: Random Port Assigning?
-# TODO: Add progress bar
 TUNNEL_PORT=12345
 SYNC_TYPE="get" # Default Argument. All others are a must.
 
@@ -48,9 +47,9 @@ done
 
 echo "Checking remote server is reachable..."
 # An easy way to check connectivity without using logins or keys or passwords.
-REMOTE_EXISTS=`nmap $REMOTE_CREDENTIALS -PN -p ssh | grep -o 'open'`
-[[ -z $REMOTE_EXISTS ]] &&
-  exit_script "ERROR: Provided remote server is not reachable."
+# REMOTE_EXISTS=`nmap $REMOTE_CREDENTIALS -PN -p ssh | grep -o 'open'`
+# [[ -z $REMOTE_EXISTS ]] &&
+#   exit_script "ERROR: Provided remote server is not reachable."
 
 # Check DB Type
 # -----------------------------------------------------------------------------------------------------------
@@ -89,8 +88,8 @@ REMOTE_DB_EXISTS=`ssh -S db-sync-socket $REMOTE_CREDENTIALS "$DB_EXISTS"`
 # ------------------------------------------------------------------------------------------------------------
 # TODO: Does any other DB requires creating before syncing?
 if [[ $SYNC_TYPE == "get" ]]; then
-  [[ -z $REMOTE_DB_EXISTS ]] &&
-    exit_script "ERROR: Can't reach remote DB. Are you sure you typed it correctly?"
+  # [[ -z $REMOTE_DB_EXISTS ]] &&
+  #   exit_script "ERROR: Can't reach remote DB. Are you sure you typed it correctly?"
   [[ -z $LOCAL_DB_EXISTS && $DB_TYPE == "mysql" ]] &&
     echo "Can't reach local DB. Creating now..." &&
     db-mysql-create $DB_NAME
@@ -110,10 +109,13 @@ else
   exit_script "ERROR: Failed to recognize sync type."
 fi
 
-# Perform Sync
+# Perform Sync (With Progress Bar)
 # ------------------------------------------------------------------------------------------------------------
 echo "Syncing DB's..."
-eval $SYNC_COMMAND
+while :; do echo -n .; sleep 1; done &
+  eval $SYNC_COMMAND;
+kill $!; trap 'kill $!' SIGTERM && echo
+
 [[ $? != 0 ]] &&
   exit_script "ERROR: DB sync failed."
 
