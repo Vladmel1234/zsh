@@ -55,7 +55,8 @@ export MC_SKIN=$HOME/.mc/lib/solarized/solarized.ini
 export MC_KEYMAP=$HOME/.mc/config/etc/mc.keymap
 
 # RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && 
+  source "$HOME/.rvm/scripts/rvm"
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Shell Configuration
@@ -78,13 +79,15 @@ export EDITOR="subl -n"
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Zsh Configuration Files
 for configFile in $HOME/.zsh/config/*; do
-  [ -r "$configFile" ] && source "$configFile"
+  [ -r "$configFile" ] && 
+    source "$configFile"
 done
 unset configFile
 
 # Dotfiles Binaries
 for evnBin in `cat $HOME/.gitslave | awk {'print $2'} | tr -d '"'`; do
-	[[ -d $evnBin/bin ]] && PATH=${PATH}:$HOME/${evnBin}/bin
+  [[ -d $evnBin/bin ]] && 
+    PATH=${PATH}:$HOME/${evnBin}/bin
 done
 unset evnBin
 
@@ -98,6 +101,7 @@ typeset -U path          ## Only unique entries please.
 # -------------------------------------------------------------------------------------------------------------------------------------
 for aliasPath in `find $HOME/.zsh/scripts -type d`; do
   aliasName=`echo $aliasPath | awk -F/ '{print $NF}'`
-  [[ -f ${aliasPath}/${aliasName} ]] && alias ${aliasName}=${aliasPath}/${aliasName}
+  [[ -f ${aliasPath}/${aliasName} ]] && 
+    alias ${aliasName}=${aliasPath}/${aliasName}
 done
 unset aliasPath
