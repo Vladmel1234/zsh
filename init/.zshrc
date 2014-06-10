@@ -14,7 +14,7 @@ plugins=(
   dirhistory                        ## Use Alt+left/right-arrow to cd through recently visited folders.
   docker                            ## Docker autocompletes.
   emacs                             ## Use emacs daemon capability.
-  extract                           ## Easily extract compressed files.
+  # extract                         ## Easily extract compressed files.
   git                               ## Adds several git aliases and increase the completion function provided by zsh.
   # git-extras                      ## Completion script for git-extras.
   # git-flow                        ## Achieve git-flow completion nirvana. Requires git-flow.
@@ -98,6 +98,6 @@ typeset -U path          ## Only unique entries please.
 # -------------------------------------------------------------------------------------------------------------------------------------
 for aliasPath in `find $HOME/.zsh/scripts -type d`; do
   aliasName=`echo $aliasPath | awk -F/ '{print $NF}'`
-  alias ${aliasName}=${aliasPath}/${aliasName}
+  [[ -f ${aliasPath}/${aliasName} ]] && alias ${aliasName}=${aliasPath}/${aliasName}
 done
 unset aliasPath

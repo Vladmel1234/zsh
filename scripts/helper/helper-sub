@@ -13,20 +13,12 @@ set -e
 
 COMMAND=`basename $0`
 SUBCOMMAND="$1"
-COMMAND_DIR="$HOME/.zsh/scripts/$COMMAND"
+SUBCOMMAND_PATH="$(command -v "$COMMAND-$SUBCOMMAND" || true)"
 
-case "$SUBCOMMAND" in
-  "" | "-h" | "--help" )
-    cat "$COMMAND_DIR/help.txt" 2>/dev/null ||
-    command $COMMAND "${@}"
-    ;;
-  * )
-    SUBCOMMAND_path="$(command -v "$COMMAND-$SUBCOMMAND" || true)"
-    if [[ -x "$SUBCOMMAND_path" ]]; then
-      shift
-      exec "$SUBCOMMAND_path" "${@}"
-    else
-      command $COMMAND "${@}"
-    fi
-    ;;
-esac
+if [[ -x "$SUBCOMMAND_PATH" ]]; then
+  shift
+  exec "$SUBCOMMAND_PATH" "${@}"
+else
+  exec ./default "${@}" 2>/dev/null ||
+  eval $COMMAND "${@}"
+fi

@@ -8,21 +8,21 @@
 # Source       : http://stackoverflow.com/a/23108309; oh-my-zsh extract plugin
 
 if [[ $# == 0 ]]; then
-  echo "Usage: extract-upstream [URL] [Destination]"
+  echo "Usage: extract-upstream <URL> <Destination>"
 fi
 
-EXTRACT_DEST=$2
+EXTRACT_DIR=$2
 if [[ -z $2 ]]; then
-  EXTRACT_DEST=`pwd`
+  EXTRACT_DIR=`pwd`
 fi
 
 file_name="$( basename "$1" )"
 case "$1" in
-  (*.tar.gz|*.tgz) wget -qO- "$1" | tar -xvzf- -C "$EXTRACT_DEST" ;;
-  (*.tar.bz2|*.tbz|*.tbz2) wget -qO- "$1" | tar -xvjf- -C "$EXTRACT_DEST" ;;
-  (*.zip|*.rar|*.tar) wget -qO- "$1" | bsdtar -xvf- -C "$EXTRACT_DEST" ;;
-  (*.gz) wget -qO- "$1" | 7z -si -tgzip x -o$EXTRACT_DEST ;;
-  (*.bz2) wget -qO- "$1" | 7z -si -tbzip2 x -o$EXTRACT_DEST ;;
-  (*.7z) wget -qO- "$1" | 7za -si x -o"$EXTRACT_DEST" ;;
+  (*.tar.gz|*.tgz) wget -qO- "$1" | tar -xvzf- -C "$EXTRACT_DIR" ;;
+  (*.tar.bz2|*.tbz|*.tbz2) wget -qO- "$1" | tar -xvjf- -C "$EXTRACT_DIR" ;;
+  (*.zip|*.rar|*.tar) wget -qO- "$1" | bsdtar -xvf- -C "$EXTRACT_DIR" ;;
+  (*.gz) wget -qO- "$1" | 7za -si -tgzip x -o$EXTRACT_DIR ;;
+  (*.bz2) wget -qO- "$1" | 7za -si -tbzip2 x -o$EXTRACT_DIR ;;
+  (*.7z) wget -qO- "$1" | 7za -si x -o"$EXTRACT_DIR" ;;
   (*) echo "extract: '$1' cannot be extracted" 1>&2 ;;
 esac

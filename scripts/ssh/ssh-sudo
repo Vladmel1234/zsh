@@ -7,4 +7,4 @@
 # Notes        :
 # Source       : http://mattconnolly.wordpress.com/2011/11/02/sudo-with-askpass/
 
-ssh '$1' SUDO_ASKPASS=/usr/lib/ssh/ssh-askpass sudo -A '$2'
+ssh '$1' SUDO_ASKPASS=/usr/lib/ssh-askpass sudo -A '$2'
