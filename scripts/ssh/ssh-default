@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Description  : Use multiple ssh config files to define hosts.
 # Usage        : ssh-concat <host-name>

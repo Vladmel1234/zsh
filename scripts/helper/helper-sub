@@ -10,7 +10,10 @@
 
 # TODO: Add completions
 
-set -e
+function exit_script() {
+  echo $1
+  exit 1
+}
 
 COMMAND=`basename $0`
 SUBCOMMAND=$1
@@ -22,8 +25,8 @@ if [[ -x "$SUBCOMMAND_PATH" ]]; then
   shift
   exec "$SUBCOMMAND_PATH" "${@}"
 elif [[ -x "$COMMAND_DEFAULT" ]]; then
-  exec "$COMMAND_DEFAULT" "${@}" 2>/dev/null
+  exec "$COMMAND_DEFAULT" "${@}"
 else
-  [[ `command -v $COMMAND` == $0 ]] && exit 1
+  [[ `command -v $COMMAND` == $0 ]] && exit_script "ERROR: Failed to run $COMMAND $SUBCOMMAND"
   eval $COMMAND "${@}"
 fi
