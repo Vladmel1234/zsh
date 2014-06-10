@@ -3,17 +3,13 @@
 # Navigation
 alias ..="cd .."
 alias ...="cd ../.."
-alias ~="cd ~" # Though `cd` is probably faster to type though
-alias -- -="cd -"
 
 # Listings
 alias lsa='ls -laF --color=always'
 alias lsd='ls -l | grep "^d"' # List only directories
-alias ll='tree --dirsfirst -ChFupDaLg 1' # List using tree
 
 # Information
 alias empt="rm -rfv ~/.Trash" # Empty the Trash
-alias ip="" #IP number
 alias fn='find . -name'
 
 # Git
@@ -27,4 +23,3 @@ alias mc='. ~/.mc/bin/mc-wrapper' # Exit mc in the last directory
 
 # Emacs
 alias emacs="emacs-snapshot-gtk"
-alias emacsc="exec emacsclient --alternate-editor="" -c '$@'" # Start emacs server if not running and launch emacsclient

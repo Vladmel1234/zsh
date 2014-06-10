@@ -8,28 +8,25 @@
 # Source       : http://www.linuxsysadmintutorials.com/multiple-ssh-client-configuration-files/
 # Source       : https://stackoverflow.com/questions/12037634/bash-cat-multiple-files
 
-ssh-concat() {
-  TMPDIR=~/tmp
-  case "$(uname -s)" in
-    Linux)
-      tmp_fifo=$(mktemp -u --suffix=._ssh_fifo)
-      ;;
-    Darwin)
-      tmp_fifo=$(mktemp -u -t ._ssh_fifo)
-      ;;
-    *)
-      echo 'unsupported OS'
-      exit
-      ;;
-  esac
+case "$(uname -s)" in
+  Linux)
+    tmp_fifo=$(mktemp -u --suffix=._ssh_fifo)
+    ;;
+  Darwin)
+    tmp_fifo=$(mktemp -u -t ._ssh_fifo)
+    ;;
+  *)
+    echo 'unsupported OS'
+    exit
+    ;;
+esac
 
-  # cleanup first
-  rm ~/tmp/._ssh_fifo* 2>/dev/null
+# cleanup first
+rm ~/tmp/._ssh_fifo* 2>/dev/null
 
-  mkfifo "$tmp_fifo"
-  cat ~/.ssh/config ~/.ssh/config.* >"$tmp_fifo" 2>/dev/null &
-  /usr/bin/ssh -F "$tmp_fifo" "$@"
-  rm "$tmp_fifo"
-}
-
-ssh-concat $*
+mkfifo "$tmp_fifo"
+for file in ~/.ssh/config ~/.ssh/config.d/*; do
+  cat $file <(echo)
+done > "$tmp_fifo" &
+/usr/bin/ssh -F "$tmp_fifo" "$@"
+rm "$tmp_fifo"

@@ -57,9 +57,6 @@ export MC_KEYMAP=$HOME/.mc/config/etc/mc.keymap
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-# GenyMotion
-export PATH="$HOME/.genymotion:$PATH"
-
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Shell Configuration
 # -------------------------------------------------------------------------------------------------------------------------------------
@@ -95,3 +92,12 @@ unset evnBin
 PATH=${PATH}:$(find $HOME/.zsh/scripts -type d | tr '\n' ':' | sed 's/:$//')
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
+
+# -------------------------------------------------------------------------------------------------------------------------------------
+# Aliases
+# -------------------------------------------------------------------------------------------------------------------------------------
+for aliasPath in `find $HOME/.zsh/scripts -type d`; do
+  aliasName=`echo $aliasPath | awk -F/ '{print $NF}'`
+  alias ${aliasName}=${aliasPath}/${aliasName}
+done
+unset aliasPath
