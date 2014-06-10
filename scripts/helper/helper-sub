@@ -27,6 +27,7 @@ if [[ -x "$SUBCOMMAND_PATH" ]]; then
 elif [[ -x "$COMMAND_DEFAULT" ]]; then
   exec "$COMMAND_DEFAULT" "${@}"
 else
-  [[ `command -v $COMMAND` == $0 ]] && exit_script "ERROR: Failed to run $COMMAND $SUBCOMMAND"
+  [[ `command -v $COMMAND` == $0 ]] && 
+    exit_script "ERROR: Failed to run $COMMAND $SUBCOMMAND"
   eval $COMMAND "${@}"
 fi
