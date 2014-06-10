@@ -1,0 +1,1 @@
+clp: Copy strings to clipboard.

@@ -7,21 +7,26 @@
 # Notes        : Generic script. Fallback to the original command, if there is one.
 # Source       : http://stackoverflow.com/q/23683860/865268
 
+# TODO: Add completions
+
 set -e
 
-command=`basename $0`
-subcommand="$1"
-case "$subcommand" in
+COMMAND=`basename $0`
+SUBCOMMAND="$1"
+COMMAND_DIR="$HOME/.zsh/scripts/$COMMAND"
+
+case "$SUBCOMMAND" in
   "" | "-h" | "--help" )
-    command $command "${@}"
+    cat "$COMMAND_DIR/help.txt" 2>/dev/null ||
+    command $COMMAND "${@}"
     ;;
   * )
-    subcommand_path="$(command -v "$command-$subcommand" || true)"
-    if [[ -x "$subcommand_path" ]]; then
+    SUBCOMMAND_path="$(command -v "$COMMAND-$SUBCOMMAND" || true)"
+    if [[ -x "$SUBCOMMAND_path" ]]; then
       shift
-      exec "$subcommand_path" "${@}"
+      exec "$SUBCOMMAND_path" "${@}"
     else
-      command $command "${@}"
+      command $COMMAND "${@}"
     fi
     ;;
 esac
