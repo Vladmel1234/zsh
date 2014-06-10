@@ -10,7 +10,7 @@
 
 # TODO: Add completions
 
-set -x
+set -e
 
 COMMAND=`basename $0`
 SUBCOMMAND=$1
