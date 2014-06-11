@@ -28,5 +28,6 @@ mkfifo "$tmp_fifo"
 for file in ~/.ssh/config ~/.ssh/config.d/*; do
   cat $file <(echo)
 done > "$tmp_fifo" &
+
 /usr/bin/ssh -F "$tmp_fifo" "$@"
 rm "$tmp_fifo"
