@@ -1,7 +1,6 @@
+lib/bd
 lib/completions
 lib/oh-my-zsh
 lib/solarized
 lib/syntax-highlighting
 lib/zaw
-
-lib/bd
