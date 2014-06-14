@@ -29,8 +29,6 @@ while getopts :f:t:h OPTION; do
 done
 shift $((OPTIND - 1))
 
-# Sanity Checks
-# ------------------------------------------------------------------------------------------------------------
 if [[ $# == 0 ]]; then
   print_usage
 fi
