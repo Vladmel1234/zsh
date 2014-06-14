@@ -1,23 +1,42 @@
 #!/usr/bin/env bash
 
 # Description  : Download a YouTube video and extract the music file from it.
-# Usage        : misc youtube2mp3 <url>
+# Usage        : misc youtube2mp3 [URL ...]
 # Dependencies : youtube-dl ffmpeg lame
 # Example      :
 # Notes        :
 # Source       :
 
-cd $HOME/Downloads
-ADDRESS=$1
-REGEX='v=(.*)'
+function exit_script() {
+  echo "$1"
+  exit 1
+}
+function print_usage() {
+  echo "Usage: misc youtube2mp3 [URL ...]"
+  exit 0
+}
 
-if [[ $ADDRESS =~ $REGEX ]]; then
-	video_filename="$(youtube-dl --get-filename $ADDRESS)"
-	video_title="$(youtube-dl --get-title $ADDRESS)"
-	youtube-dl $ADDRESS
-	avconv -i $video_filename "$video_title".wav
-	lame "$video_title".wav "$video_title".mp3
-	rm $video_filename "$video_title".wav
-else
-	echo "Sorry but the system encountered a problem."
+if [[ $# == 0 ]]; then
+  print_usage
 fi
+
+# Convertion Magic - Commense.
+# ------------------------------------------------------------------------------------------------------------
+cd $HOME/Downloads
+REGEX='v=(.*)'
+while (( $# > 0 )); do
+  if [[ ! $ADDRESS =~ $REGEX ]]; then
+    echo "'$1' is not a valid url" 1>&2
+    shift
+    continue
+  fi
+
+  VIDEO_FILENAME="$(youtube-dl --get-filename $1)"
+  VIDEO_TITLE="$(youtube-dl --get-title $1)"
+  youtube-dl $1
+  avconv -i $VIDEO_FILENAME "$VIDEO_TITLE".wav
+  lame "$VIDEO_TITLE".wav "$VIDEO_TITLE".mp3
+  rm $VIDEO_FILENAME "$VIDEO_TITLE".wav
+
+  shift
+done
