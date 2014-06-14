@@ -3,7 +3,7 @@
 # Description  : Batch convert pdf files to epub recursively in a folder(s).
 # Usage        : misc pdf2epub [-f (F)rom-format] [-t (T)o-format] [-h] [Directory/File ...]
 # Dependencies : calibre
-# Example      : misc pdf2epub $HOME/Books somebook.pdf
+# Example      : misc pdf2epub -f pdf -t epub $HOME/Books somebook.pdf
 # Notes        :
 # Source       : http://askubuntu.com/questions/344407
 
