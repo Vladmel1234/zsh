@@ -7,8 +7,6 @@
 # Notes        :
 # Source       :
 
-set -x
-
 function exit_script() {
   echo "$1"
   exit 1
