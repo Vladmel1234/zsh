@@ -15,6 +15,10 @@ function exit_script() {
   ssh -S db-sync-socket -O exit $REMOTE_CREDENTIALS 2> /dev/null
   exit 1
 }
+function print_usage() {
+  echo "Usage: db-sync [-t db-(t)ype] [-n db-(n)ame] [-r (r)emote-credentials] [-m sync-(m)ethod] [-h]"
+  exit 0
+}
 
 TUNNEL_PORT=12345
 SYNC_TYPE="get" # Default Argument. All others are a must.
@@ -27,14 +31,12 @@ while getopts :m:t:n:r:h OPTION; do
     m) SYNC_TYPE=$OPTARG ;;
     n) DB_NAME=$OPTARG ;;
     r) REMOTE_CREDENTIALS=$OPTARG ;;
-    h) echo "Usage: db-sync [-t db-(t)ype] [-n db-(n)ame] [-r (r)emote-credentials] [-m sync-(m)ethod] [-h]"
-       exit 0 ;;
-    \?) echo "Invalid option -$OPTARG. Please run 'db-sync -h' for help" 2> /dev/null
-        exit 1 ;;
-    :) echo "Option -$OPTARG requires an argument. Please run 'db-sync -h' for help" 2> /dev/null
-       exit 1 ;;
+    h) print_usage ;;
+    \?) exit_script "Invalid option -$OPTARG. Please run 'db-sync -h' for help" ;;
+    :) exit_script "Option -$OPTARG requires an argument. Please run 'db-sync -h' for help" ;;
   esac
 done
+shift $((OPTIND - 1))
 
 # Sanity checks
 # ------------------------------------------------------------------------------------------------------------

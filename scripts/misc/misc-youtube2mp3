@@ -1,24 +1,20 @@
 #!/usr/bin/env bash
 
 # Description  : Download a YouTube video and extract the music file from it.
-# Usage        :
-# Dependencies :
+# Usage        : misc youtube2mp3 <url>
+# Dependencies : youtube-dl ffmpeg lame
 # Example      :
 # Notes        :
 # Source       :
 
-evnDependencies="youtube-dl ffmpeg lame"
-for evnDependency in $evnDependencies; do
-	command -v ${evnDependency} >/dev/null 2>&1 || { echo >&2 "I require '${evnDependency}' but it's not installed. Aborting."; exit; }
-done
+cd $HOME/Downloads
+ADDRESS=$1
+REGEX='v=(.*)'
 
-cd ~/Downloads
-address=$1
-regex='v=(.*)'
-if [[ $address =~ $regex ]]; then
-	video_filename="$(youtube-dl --get-filename $address)"
-	video_title="$(youtube-dl --get-title $address)"
-	youtube-dl $address
+if [[ $ADDRESS =~ $REGEX ]]; then
+	video_filename="$(youtube-dl --get-filename $ADDRESS)"
+	video_title="$(youtube-dl --get-title $ADDRESS)"
+	youtube-dl $ADDRESS
 	avconv -i $video_filename "$video_title".wav
 	lame "$video_title".wav "$video_title".mp3
 	rm $video_filename "$video_title".wav

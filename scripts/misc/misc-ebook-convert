@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+# Description  : Batch convert pdf files to epub recursively in a folder(s).
+# Usage        : misc pdf2epub [-f (F)rom-format] [-t (T)o-format] [-h] [Directory/File ...]
+# Dependencies : calibre
+# Example      : misc pdf2epub $HOME/Books somebook.pdf
+# Notes        :
+# Source       : http://askubuntu.com/questions/344407
+
+function exit_script() {
+  echo "$1"
+  exit 1
+}
+function print_usage() {
+  echo "Usage: misc pdf2epub [-f (F)rom-format] [-t (T)o-format] [-h] [Directory/File ...]"
+  exit 0
+}
+
+# Get All Variables
+# ------------------------------------------------------------------------------------------------------------
+while getopts :f:t:h OPTION; do
+  case $OPTION in
+    f) FROM_FORMAT=$OPTARG ;;
+    t) TO_FORMAT=$OPTARG ;;
+    h) print_usage ;;
+    :) exit_script "Option -$OPTARG requires an argument. Please run 'misc pdf2epub -h' for help" ;;
+    \?) exit_script "Invalid option -$OPTARG. Please run 'misc pdf2epub -h' for help" ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+# Sanity Checks
+# ------------------------------------------------------------------------------------------------------------
+if [[ $# == 0 ]]; then
+  print_usage
+fi
+
+# Convertion Magic - Commense.
+# ------------------------------------------------------------------------------------------------------------
+# Treat only newlines as spaces, just in case the book has spaces in its name.
+IFS=$'\n'
+while (( $# > 0 )); do
+  if [[ ! -d "$1" && ! -f "$1" ]]; then
+    echo "'$1' is not a valid directory/file" 1>&2
+    shift
+    continue
+  fi
+
+  # This is actually good for both directories AND files!
+  for BOOK in `find $1 -type f | grep ".${FROM_FORMAT}$"`; do
+    echo "Converting $BOOK"
+    ebook-convert "$BOOK" "$(basename "$BOOK" .${FROM_FORMAT}).${TO_FORMAT}"
+  done
+
+  shift
+done
