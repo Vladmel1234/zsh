@@ -23,3 +23,6 @@ alias mc='. ~/.mc/bin/mc-wrapper' # Exit mc in the last directory
 
 # Emacs
 alias emacs="emacs-snapshot-gtk"
+
+# Zsh
+alias reload=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"

@@ -7,6 +7,8 @@
 # Notes        :
 # Source       :
 
+set -x
+
 function exit_script() {
   echo "$1"
   exit 1
@@ -25,7 +27,7 @@ fi
 cd $HOME/Downloads
 REGEX='v=(.*)'
 while (( $# > 0 )); do
-  if [[ ! $ADDRESS =~ $REGEX ]]; then
+  if [[ ! $1 =~ $REGEX ]]; then
     echo "'$1' is not a valid url" 1>&2
     shift
     continue
@@ -33,6 +35,7 @@ while (( $# > 0 )); do
 
   VIDEO_FILENAME="$(youtube-dl --get-filename $1)"
   VIDEO_TITLE="$(youtube-dl --get-title $1)"
+
   youtube-dl $1
   avconv -i $VIDEO_FILENAME "$VIDEO_TITLE".wav
   lame "$VIDEO_TITLE".wav "$VIDEO_TITLE".mp3
