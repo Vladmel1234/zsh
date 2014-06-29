@@ -7,4 +7,5 @@
 # Notes        :
 # Source       : http://www.centurylinklabs.com/15-quick-docker-tips/
 
+docker kill $(docker ps -a -q) 2>&1
 docker rm $(docker ps -a -q) 2>&1

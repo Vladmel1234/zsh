@@ -7,4 +7,6 @@
 # Notes        :
 # Source       :
 
+docker kill $(docker ps -a -q) 2>&1
+docker rm $(docker ps -a -q) 2>&1
 docker rmi $(docker ps -a -q) 2>&1
