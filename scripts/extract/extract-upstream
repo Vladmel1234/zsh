@@ -15,6 +15,9 @@ EXTRACT_DIR=$2
 if [[ -z $2 ]]; then
   EXTRACT_DIR=`pwd`
 fi
+if [[ ! -d $2 ]]; then
+  mkdir -p $2
+fi
 
 file_name="$( basename "$1" )"
 case "$1" in
