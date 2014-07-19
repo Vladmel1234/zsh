@@ -57,6 +57,7 @@ export MC_KEYMAP=$HOME/.mc/config/etc/mc.keymap
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] &&
   source "$HOME/.rvm/scripts/rvm"
+export RI="--format ansi --width 70"
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Shell Configuration
