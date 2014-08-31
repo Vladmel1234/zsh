@@ -4,7 +4,7 @@
 # Usage        : db sync [-t db-(t)ype] [-n db-(n)ame] [-r (r)emote-credentials] [-m sync-(m)ethod] [-h]
 # Dependencies : mysql, mongo, postgres, openssh-server, nmap
 # Example      : db sync -m get -t mysql -n some_db -r deploy@server.com
-# Notes        : ASSUMES: Always user root, no password for DB access, ssh-key is available at remote host.
+# Notes        : ASSUMES: Always user root, no password for DB access, ssh-key is available at remote host, same DB-name at both ends.
 # Source       : http://stackoverflow.com/a/15198031/865268 - Setup Temporary SSH
 # Source       : http://stackoverflow.com/a/16620593/865268 - Copy Mongo
 # Source       : http://stackoverflow.com/a/1238305/865268  - Copy Postgres
@@ -47,11 +47,12 @@ for SCRIPT_VAR in $SCRIPT_VARS; do
     exit_script "ERROR: Variable $SCRIPT_VAR must have a value."
 done
 
-echo "Checking remote server is reachable..."
 # An easy way to check connectivity without using logins or keys or passwords.
-REMOTE_EXISTS=`nmap $REMOTE_CREDENTIALS -PN -p ssh | grep -o 'open'`
-[[ -z $REMOTE_EXISTS ]] &&
-  exit_script "ERROR: Provided remote server is not reachable."
+# Need to find a way to get only the server credentials for it to work properly.
+echo "Checking remote server is reachable..."
+# REMOTE_EXISTS=`nmap $REMOTE_CREDENTIALS -PN -p ssh | grep -o 'open'`
+# [[ -z $REMOTE_EXISTS ]] &&
+#   exit_script "ERROR: Provided remote server is not reachable."
 
 # Check DB Type
 # -----------------------------------------------------------------------------------------------------------
