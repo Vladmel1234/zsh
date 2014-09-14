@@ -60,6 +60,18 @@ export MC_KEYMAP=$HOME/.mc/config/etc/mc.keymap
 export RI="--format ansi --width 70"
 
 # -------------------------------------------------------------------------------------------------------------------------------------
+# History
+# -------------------------------------------------------------------------------------------------------------------------------------
+HISTFILE=$HOME/.zsh_history    # Enable history saving on shell exit
+setopt APPEND_HISTORY          # Append rather than overwrite history file.
+HISTSIZE=2200                  # Lines of history to maintain memory
+SAVEHIST=2000                  # Lines of history to maintain in history file.
+setopt HIST_SAVE_NO_DUPS       # Don't bother saving duplicates.
+setopt HIST_IGNORE_ALL_DUPS    # Don't bother saving duplicates.
+setopt HIST_IGNORE_SPACE       # Don't save commands with leading spaces.
+setopt HIST_REDUCE_BLANKS      # Remove unnecessary blanks from command.
+
+# -------------------------------------------------------------------------------------------------------------------------------------
 # Shell Configuration
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Prefer US English and use UTF-8
