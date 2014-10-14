@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Description  : Recursively download files from a website.
+# Usage        : wget [URL] [Pattern]
+# Dependencies : wget
+# Example      : wget -r -l1 --no-parent -A.png http://some.website.com/images
+# Notes        :
+# Source       : http://stackoverflow.com/a/18107344
+
+wget -r -l1 --no-parent -A$2 $1
