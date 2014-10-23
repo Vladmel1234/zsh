@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # Description  : Translate a line of text using a hotkey.
-# Usage        : misc translate [Text]
-# Dependencies : youtube-dl ffmpeg lame
+# Usage        : Use through a hotkey, set by xbindkeys.
+# Dependencies :
 # Example      :
-# Notes        : Use through a hotkey, set by xbindkeys.
+# Notes        :
 # Source       : http://hackerspace.lifehacker.com/1648824665
 
 notify-send -u critical "$(xsel -o)" "$(wget -U "Mozilla/5.0" -qO - "http://translate.google.com/translate_a/t?client=t&text=$(xsel -o | sed "s/[\"'<>]//g")&sl=auto&tl=eng" | sed 's/\[\[\[\"//' | cut -d \" -f 1)"
