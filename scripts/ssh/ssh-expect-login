@@ -10,7 +10,7 @@
 set timeout 2
 
 set ssh [lindex $argv 0]
-set cwd [lindex $argv 1]
+set cmd [lindex $argv 1]
 set pass [lindex $argv 2]
 
 spawn ~/.zsh/scripts/ssh/ssh "$ssh"
@@ -21,5 +21,5 @@ if { $pass != "" } {
 	}
 
 expect "~]$"
-send "cd $cwd && clear\n"
+send "$cmd && clear\n"
 interact
