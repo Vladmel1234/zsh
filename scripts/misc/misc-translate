@@ -4,7 +4,7 @@
 # Usage        : Use through a hotkey, set by xbindkeys.
 # Dependencies :
 # Example      :
-# Notes        :
+# Notes        : Has to be assigned a keybinding through xkeybindings or system-tools.
 # Source       : http://hackerspace.lifehacker.com/1648824665
 
-notify-send -u critical "$(xsel -o)" "$(wget -U "Mozilla/5.0" -qO - "http://translate.google.com/translate_a/t?client=t&text=$(xsel -o | sed "s/[\"'<>]//g")&sl=auto&tl=eng" | sed 's/\[\[\[\"//' | cut -d \" -f 1)"
+notify-send -u critical -t 1000 "$(xsel -o)" "$(wget -U "Mozilla/5.0" -qO - "http://translate.google.com/translate_a/t?client=t&text=$(xsel -o | sed "s/[\"'<>]//g")&sl=auto&tl=eng" | sed 's/\[\[\[\"//' | cut -d \" -f 1)"
