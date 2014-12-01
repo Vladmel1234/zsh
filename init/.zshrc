@@ -16,7 +16,7 @@ plugins=(
   emacs                             ## Use emacs daemon capability.
   # extract                         ## Easily extract compressed files.
   git                               ## Adds several git aliases and increase the completion function provided by zsh.
-  # git-extras                      ## Completion script for git-extras.
+  git-extras                        ## Completion script for git-extras.
   # git-flow                        ## Achieve git-flow completion nirvana. Requires git-flow.
   # gpg-agent                       ## Start a gpg-agent on startup (?).
   history-substring-search          ## Write a string and use up/down-arrows to search it through history.
