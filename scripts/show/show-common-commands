@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Description  : List the most commonly used commands and their statistics.
-# Usage        : misc common-commands
+# Usage        : show common-commands
 # Dependencies :
 # Example      :
 # Notes        :
