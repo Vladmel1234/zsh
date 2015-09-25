@@ -52,7 +52,6 @@ PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -
 
 # Midnight commander
 export MC_SKIN=$HOME/.config/mc/lib/solarized/solarized.ini
-export MC_KEYMAP=$HOME/.config/mc/config/etc/mc.keymap
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] &&
@@ -82,7 +81,7 @@ export LANG="en_US"
 # Find all possible options with `find /lib/terminfo /usr/share/terminfo -name "*256*"`
 export TERM=xterm-256color
 export XTERM=xterm-256color
-export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CONFIG_HOME=$HOME/.config/mc/etc
 
 ## Export basic editor
 export EDITOR="subl -n"
