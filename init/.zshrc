@@ -102,7 +102,7 @@ for evnBin in `cat $HOME/.config/.gitslave | awk {'print $2'} | tr -d '"'`; do
   [[ -d $evnBin/bin ]] &&
     PATH=${PATH}:$HOME/.config/${evnBin}/bin
 done
-PATH=${PATH}:$HOME/.local.d/bin
+PATH=${PATH}:$HOME/local.d/bin
 unset evnBin
 
 # Zsh Scripts Binaries
