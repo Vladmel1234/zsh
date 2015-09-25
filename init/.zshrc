@@ -51,8 +51,8 @@ source $HOME/.config/zsh/lib/bd/bd.zsh
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
 # Midnight commander
-export MC_SKIN=$HOME/.mc/lib/solarized/solarized.ini
-export MC_KEYMAP=$HOME/.mc/config/etc/mc.keymap
+export MC_SKIN=$HOME/.config/mc/lib/solarized/solarized.ini
+export MC_KEYMAP=$HOME/.config/mc/config/etc/mc.keymap
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] &&
@@ -62,14 +62,14 @@ export RI="--format ansi --width 70"
 # -------------------------------------------------------------------------------------------------------------------------------------
 # History
 # -------------------------------------------------------------------------------------------------------------------------------------
-HISTFILE=$HOME/.config/zsh_history    # Enable history saving on shell exit
-setopt APPEND_HISTORY          # Append rather than overwrite history file.
-HISTSIZE=2200                  # Lines of history to maintain memory
-SAVEHIST=2000                  # Lines of history to maintain in history file.
-setopt HIST_SAVE_NO_DUPS       # Don't bother saving duplicates.
-setopt HIST_IGNORE_ALL_DUPS    # Don't bother saving duplicates.
-setopt HIST_IGNORE_SPACE       # Don't save commands with leading spaces.
-setopt HIST_REDUCE_BLANKS      # Remove unnecessary blanks from command.
+HISTFILE=$HOME/.cache/zsh/zsh_history    # Enable history saving on shell exit
+setopt APPEND_HISTORY                    # Append rather than overwrite history file.
+HISTSIZE=2200                            # Lines of history to maintain memory
+SAVEHIST=2000                            # Lines of history to maintain in history file.
+setopt HIST_SAVE_NO_DUPS                 # Don't bother saving duplicates.
+setopt HIST_IGNORE_ALL_DUPS              # Don't bother saving duplicates.
+setopt HIST_IGNORE_SPACE                 # Don't save commands with leading spaces.
+setopt HIST_REDUCE_BLANKS                # Remove unnecessary blanks from command.
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Shell Configuration
@@ -98,9 +98,9 @@ done
 unset configFile
 
 # Dotfiles Binaries
-for evnBin in `cat $HOME/.gitslave | awk {'print $2'} | tr -d '"'`; do
+for evnBin in `cat $HOME/.config/.gitslave | awk {'print $2'} | tr -d '"'`; do
   [[ -d $evnBin/bin ]] &&
-    PATH=${PATH}:$HOME/${evnBin}/bin
+    PATH=${PATH}:$HOME/.config/${evnBin}/bin
 done
 PATH=${PATH}:$HOME/.local.d/bin
 unset evnBin

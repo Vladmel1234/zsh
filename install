@@ -4,9 +4,6 @@ echo "Configuring ZSH as the default Shell"
 echo $(which zsh) | sudo tee -a /etc/shells
 chsh -s $(which zsh)
 
-echo "Setting Solarized"
-bash $HOME/.config/zsh/lib/solarized/set_dark.sh
-
 echo "Creating all symbolic links for zsh"
 ln -sf $HOME/.config/zsh/init/.zshenv $HOME/ > /dev/null 2>&1
 ln -sf $HOME/.config/zsh/init/.zshrc $HOME/ > /dev/null 2>&1
