@@ -3,6 +3,6 @@
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Enable shell prompt
 # -------------------------------------------------------------------------------------------------------------------------------------
-fpath=($fpath $HOME/.zsh/lib/prompt)
-fpath=($fpath $HOME/.zsh/lib/completions/src)
+fpath=($fpath $HOME/.config/zsh/lib/prompt)
+fpath=($fpath $HOME/.config/zsh/lib/completions/src)
 typeset -U fpath

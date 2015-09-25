@@ -3,7 +3,7 @@
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Oh-My-Zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
-ZSH=$HOME/.zsh/lib/oh-my-zsh        ## Path to your oh-my-zsh configuration.
+ZSH=$HOME/.config/zsh/lib/oh-my-zsh        ## Path to your oh-my-zsh configuration.
 plugins=(
   # chruby                          ## Change ruby environment autocomplete. Requires chruby.
   colored-man                       ## Colorize man pages.
@@ -40,12 +40,12 @@ source $ZSH/oh-my-zsh.sh            ## Source it, duh.
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Plugins
 # -------------------------------------------------------------------------------------------------------------------------------------
-source $HOME/.zsh/lib/syntax-highlighting/zsh-syntax-highlighting.zsh
-source $HOME/.zsh/lib/clipboard/zsh-clipboard.zsh
-source $HOME/.zsh/lib/prompt/prompt-setup-old
-source $HOME/.zsh/lib/zaw/zaw.zsh
-source $HOME/.zsh/lib/bd/bd.zsh
-#source $HOME/.zsh/lib/liquidprompt/liquidprompt
+source $HOME/.config/zsh/lib/syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.config/zsh/lib/clipboard/zsh-clipboard.zsh
+source $HOME/.config/zsh/lib/prompt/prompt-setup-old
+source $HOME/.config/zsh/lib/zaw/zaw.zsh
+source $HOME/.config/zsh/lib/bd/bd.zsh
+#source $HOME/.config/zsh/lib/liquidprompt/liquidprompt
 
 # Tmux powerline
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
@@ -62,7 +62,7 @@ export RI="--format ansi --width 70"
 # -------------------------------------------------------------------------------------------------------------------------------------
 # History
 # -------------------------------------------------------------------------------------------------------------------------------------
-HISTFILE=$HOME/.zsh_history    # Enable history saving on shell exit
+HISTFILE=$HOME/.config/zsh_history    # Enable history saving on shell exit
 setopt APPEND_HISTORY          # Append rather than overwrite history file.
 HISTSIZE=2200                  # Lines of history to maintain memory
 SAVEHIST=2000                  # Lines of history to maintain in history file.
@@ -91,7 +91,7 @@ export EDITOR="subl -n"
 # Paths for zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Zsh Configuration Files
-for configFile in $HOME/.zsh/config/*; do
+for configFile in $HOME/.config/zsh/config/*; do
   [ -r "$configFile" ] &&
     source "$configFile"
 done
@@ -106,14 +106,14 @@ PATH=${PATH}:$HOME/.local.d/bin
 unset evnBin
 
 # Zsh Scripts Binaries
-PATH=${PATH}:$(find $HOME/.zsh/scripts -type d | tr '\n' ':' | sed 's/:$//')
+PATH=${PATH}:$(find $HOME/.config/zsh/scripts -type d | tr '\n' ':' | sed 's/:$//')
 export PATH              ## Export it, duh.
 typeset -U path          ## Only unique entries please.
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Aliases
 # -------------------------------------------------------------------------------------------------------------------------------------
-for aliasPath in `find $HOME/.zsh/scripts -type d`; do
+for aliasPath in `find $HOME/.config/zsh/scripts -type d`; do
   aliasName=`echo $aliasPath | awk -F/ '{print $NF}'`
   [[ -f ${aliasPath}/${aliasName} ]] &&
     alias ${aliasName}=${aliasPath}/${aliasName}
