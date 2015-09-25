@@ -9,7 +9,7 @@ alias lsa='ls -laF --color=always'
 alias lsd='ls -l | grep "^d"' # List only directories
 
 # Information
-alias empt="rm -rfv ~/.Trash" # Empty the Trash
+alias empt="rm -rfv $HOME/.Trash" # Empty the Trash
 alias fn='find . -name'
 
 # Git
@@ -19,10 +19,10 @@ alias g="git"
 alias _='sudo'
 
 # Midnight Commander
-alias mc='. ~/.config/mc/bin/mc-wrapper' # Exit mc in the last directory
+alias mc='. $HOME/.config/mc/bin/mc-wrapper' # Exit mc in the last directory
 
 # Emacs
 alias emacs="emacs-snapshot-gtk"
 
 # Zsh
-alias reload=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"
+alias reload=". $HOME/.zshrc && echo 'ZSH config reloaded from $HOME/.zshrc'"
