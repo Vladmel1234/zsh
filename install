@@ -1,8 +1,8 @@
 #!/bin/zsh
 
 echo "Configuring ZSH as the default Shell"
-chsh -s /bin/zsh
-compaudit | xargs chmod g-w
+echo $(which zsh) | sudo tee -a /etc/shells
+chsh -s $(which zsh)
 
 echo "Setting Solarized"
 bash $HOME/.config/zsh/lib/solarized/set_dark.sh
