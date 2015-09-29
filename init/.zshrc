@@ -5,6 +5,7 @@
 # -------------------------------------------------------------------------------------------------------------------------------------
 ZSH=$HOME/.config/zsh/lib/oh-my-zsh        ## Path to your oh-my-zsh configuration.
 plugins=(
+  bower-cask                        ## Brew cask autocomplete
   # chruby                          ## Change ruby environment autocomplete. Requires chruby.
   colored-man                       ## Colorize man pages.
   colorize                          ## Highligt file content based on file extension. Requires python-pygments.
@@ -18,16 +19,17 @@ plugins=(
   git                               ## Adds several git aliases and increase the completion function provided by zsh.
   git-extras                        ## Completion script for git-extras.
   # git-flow                        ## Achieve git-flow completion nirvana. Requires git-flow.
-  # gpg-agent                       ## Start a gpg-agent on startup (?).
+  gpg-agent                         ## Start a gpg-agent on startup (?).
   history-substring-search          ## Write a string and use up/down-arrows to search it through history.
   iwhois                            ## Provide a whois command with a more accurate and up to date list of whois.
   knife                             ## Autocomplete for knife command.
   # rsync                           ## Rsync aliases.
-  # ssh-agent                       ## SSH agent forwarding support.
+  #ssh-agent                        ## SSH agent forwarding support.
   sublime                           ## Sublime Text 2 Aliases.
   systemadmin                       ## System administrator utils.
-  # tmuxinator                      ## Tmuxinator autocomplete.
-  # torrent                         ## Get a torrent using a magnet link.
+  sudo                              ## Add sudo if needed, retrospectively.
+  torrent                           ## Get a torrent using a magnet link.
+  tugboat                           ## Interact with DigitalOcean Droplets.
   vagrant                           ## Vagrat autocomplete.
   web-search                        ## Search a string in one of the search-engines.
 )
