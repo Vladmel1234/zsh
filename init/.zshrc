@@ -54,6 +54,7 @@ PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -
 
 # Midnight commander
 export MC_SKIN=$HOME/.config/mc/lib/solarized/solarized.ini
+export XDG_CONFIG_HOME=$HOME/.config/mc/etc
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] &&
@@ -81,9 +82,8 @@ export LANG="en_US"
 
 # 256 bit colors (primarily for midnight commander)
 # Find all possible options with `find /lib/terminfo /usr/share/terminfo -name "*256*"`
-export TERM=xterm-256color
-export XTERM=xterm-256color
-export XDG_CONFIG_HOME=$HOME/.config/mc/etc
+export TERM=screen-256color
+export XTERM=screen-256color
 
 ## Export basic editor
 export EDITOR="subl -n"
@@ -120,3 +120,5 @@ for aliasPath in `find $HOME/.config/zsh/scripts -type d`; do
     alias ${aliasName}=${aliasPath}/${aliasName}
 done
 unset aliasPath
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

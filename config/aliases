@@ -5,7 +5,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 
 # Listings
-alias lsa='ls -laF --color=always'
+alias lsa='ls -laFG'
 alias lsd='ls -l | grep "^d"' # List only directories
 
 # Information
