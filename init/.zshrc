@@ -5,7 +5,7 @@
 # -------------------------------------------------------------------------------------------------------------------------------------
 ZSH=$HOME/.config/zsh/lib/oh-my-zsh        ## Path to your oh-my-zsh configuration.
 plugins=(
-  #bower-cask                        ## Brew cask autocomplete
+  # bower-cask                        ## Brew cask autocomplete
   # chruby                          ## Change ruby environment autocomplete. Requires chruby.
   colored-man                       ## Colorize man pages.
   colorize                          ## Highligt file content based on file extension. Requires python-pygments.
@@ -16,21 +16,21 @@ plugins=(
   #docker                            ## Docker autocompletes.
   emacs                             ## Use emacs daemon capability.
   # extract                         ## Easily extract compressed files.
-  #git                               ## Adds several git aliases and increase the completion function provided by zsh.
-  #git-extras                        ## Completion script for git-extras.
+  # git                               ## Adds several git aliases and increase the completion function provided by zsh.
+  # git-extras                        ## Completion script for git-extras.
   # git-flow                        ## Achieve git-flow completion nirvana. Requires git-flow.
   gpg-agent                         ## Start a gpg-agent on startup (?).
   history-substring-search          ## Write a string and use up/down-arrows to search it through history.
   iwhois                            ## Provide a whois command with a more accurate and up to date list of whois.
-  #knife                             ## Autocomplete for knife command.
+  # knife                             ## Autocomplete for knife command.
   # rsync                           ## Rsync aliases.
-  #ssh-agent                        ## SSH agent forwarding support.
-  #sublime                           ## Sublime Text 2 Aliases.
+  # ssh-agent                        ## SSH agent forwarding support.
+  # sublime                           ## Sublime Text 2 Aliases.
   systemadmin                       ## System administrator utils.
   sudo                              ## Add sudo if needed, retrospectively.
   torrent                           ## Get a torrent using a magnet link.
   tugboat                           ## Interact with DigitalOcean Droplets.
-  #vagrant                           ## Vagrat autocomplete.
+  # vagrant                           ## Vagrat autocomplete.
   web-search                        ## Search a string in one of the search-engines.
 )
 DISABLE_AUTO_UPDATE="true"          ## Disable annoying weekly auto-update checks
@@ -44,7 +44,7 @@ source $ZSH/oh-my-zsh.sh            ## Source it, duh.
 # -------------------------------------------------------------------------------------------------------------------------------------
 source $HOME/.config/zsh/lib/syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.config/zsh/lib/prompt/prompt-setup-old
-source $HOME/.config/zsh/lib/zaw/zaw.zsh
+#source $HOME/.config/zsh/lib/zaw/zaw.zsh
 source $HOME/.config/zsh/lib/bd/bd.zsh
 
 # Tmux powerline
@@ -53,6 +53,11 @@ PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -
 # Midnight commander
 export MC_SKIN=$HOME/.config/mc/lib/solarized/solarized.ini
 export XDG_CONFIG_HOME=$HOME/.config/mc/etc
+
+## FZF
+export PATH="$PATH:$HOME/.config/fzf/lib/fzf/bin"
+export MANPATH="$MANPATH:$HOME/.config/fzf/lib/fzf/man"
+source "$HOME/.config/fzf/lib/fzf/shell/key-bindings.zsh"
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # History
@@ -96,7 +101,6 @@ for evnBin in `cat $HOME/.config/.gitslave | awk {'print $2'} | tr -d '"'`; do
   [[ -d $evnBin/bin ]] &&
     PATH=${PATH}:$HOME/.config/${evnBin}/bin
 done
-PATH=${PATH}:$HOME/local.d/bin
 unset evnBin
 
 # Zsh Scripts Binaries
