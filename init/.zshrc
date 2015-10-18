@@ -37,8 +37,6 @@ DISABLE_AUTO_UPDATE="true"          ## Disable annoying weekly auto-update check
 COMPLETION_WAITING_DOTS="true"      ## Red dots to be displayed while waiting for completion
 source $ZSH/oh-my-zsh.sh            ## Source it, duh.
 
-# colemak colored-man colorize
-
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Plugins
 # -------------------------------------------------------------------------------------------------------------------------------------
@@ -59,8 +57,11 @@ export PATH="$PATH:$HOME/.config/fzf/lib/fzf/bin"
 export MANPATH="$MANPATH:$HOME/.config/fzf/lib/fzf/man"
 source "$HOME/.config/fzf/lib/fzf/shell/key-bindings.zsh"
 
+# Vagrant
+export VAGRANT_HOME=$HOME/.local/share/vagrant
+
 # -------------------------------------------------------------------------------------------------------------------------------------
-# History
+# History & Completion
 # -------------------------------------------------------------------------------------------------------------------------------------
 HISTFILE=$HOME/.cache/zsh/zsh_history    # Enable history saving on shell exit
 setopt APPEND_HISTORY                    # Append rather than overwrite history file.
@@ -70,6 +71,7 @@ setopt HIST_SAVE_NO_DUPS                 # Don't bother saving duplicates.
 setopt HIST_IGNORE_ALL_DUPS              # Don't bother saving duplicates.
 setopt HIST_IGNORE_SPACE                 # Don't save commands with leading spaces.
 setopt HIST_REDUCE_BLANKS                # Remove unnecessary blanks from command.
+rm -f $HOME/.zcompdump*; compinit -d $HOME/.cache/zsh/compdump # Move the f*** compdump to .cache directory
 
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Shell Configuration
@@ -80,8 +82,8 @@ export LANG="en_US"
 
 # 256 bit colors (primarily for midnight commander)
 # Find all possible options with `find /lib/terminfo /usr/share/terminfo -name "*256*"`
-export TERM=screen-256color
-export XTERM=screen-256color
+export TERM=xterm-256color
+export XTERM=xterm-256color
 
 ## Export basic editor
 export EDITOR="subl -n"
@@ -90,7 +92,7 @@ export EDITOR="subl -n"
 # Paths for zsh
 # -------------------------------------------------------------------------------------------------------------------------------------
 # Zsh Configuration Files
-for configFile in $HOME/.config/zsh/config/*; do
+for configFile in $HOME/.config/zsh/config/* $HOME/.config/fzf/config/*; do
   [ -r "$configFile" ] &&
     source "$configFile"
 done
@@ -117,5 +119,3 @@ for aliasPath in `find $HOME/.config/zsh/scripts -type d`; do
     alias ${aliasName}=${aliasPath}/${aliasName}
 done
 unset aliasPath
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
