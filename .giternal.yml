@@ -10,6 +10,6 @@ oh-my-zsh:
 syntax-highlighting:
   repo: https://github.com/zsh-users/zsh-syntax-highlighting
   path: lib
-zaw:
-  repo: https://github.com/zsh-users/zaw
-  path: lib
+# zaw:
+#   repo: https://github.com/zsh-users/zaw
+#   path: lib
